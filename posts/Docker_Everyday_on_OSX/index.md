@@ -1,3 +1,6 @@
+---
+layout: null
+---
 # Docker everyday on OSX
 
 Disclaimer: This breaks a bunch of the core Docker principals for application deployment, and this works for my workflow. This should actually work on all OS's that can run Linux docker images such as Windows and Linux itself, however YMMV 
