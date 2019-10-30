@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: post
 ---
 # Docker everyday on OSX
 
