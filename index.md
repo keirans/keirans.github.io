@@ -2,8 +2,6 @@
 layout: default
 ---
 
-Another attempt to consolidate some of my various published and presented content...
-
 
 | Date        | Content            | 
 |:-------------|:------------------|
