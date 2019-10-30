@@ -1,5 +1,5 @@
 ---
-layout: null
+layout: single
 ---
 # Docker everyday on OSX
 
