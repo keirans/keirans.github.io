@@ -16,4 +16,6 @@ Another attempt to consolidate some of my various published and presented conten
 | 22/06/2017   | [Automated Puppet Compile Masters in Microsoft Azure](https://github.com/keirans/azure-puppet-compilemasters) | 
 | 26/10/2017   | [Unlocking Azure with Puppet Enterprise (PuppetConf)](https://www.youtube.com/watch?v=tbWeYvOHvJE) | 
 | 15/04/2017   | [Understanding The AWS Autoheal Pattern](https://github.com/keirans/aws_autoheal) |
-
+| 27/09/2018   | [Auditing Bitbucket Server Data for Credentials in AWS](https://www.sourcedgroup.com/blog/auditing-bitbucket-server-data-credentials-in-aws) |
+| 08/05/2019   | [Music to My Ears – A Modern Cloud Architecture for Legacy Audio Streams](https://www.sourcedgroup.com/blog/music-to-my-ears-a-modern-cloud-architecture-for-legacy-audio-streams/) |
+| 18/09/2019   | [Pulling Puppet’s Strings with AWS OpsWorks CM](https://www.sourcedgroup.com/blog/pulling-puppets-strings-with-aws-opsworks) |
