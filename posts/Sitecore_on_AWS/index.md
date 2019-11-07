@@ -1,7 +1,7 @@
 ---
 layout: post
 author: Keiran
-title: Sitecore on AWS
+title: Running Sitecore on AWS
 ---
 
 ## Introduction
