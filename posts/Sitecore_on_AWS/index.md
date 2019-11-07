@@ -1,6 +1,10 @@
 ---
 layout: post
+author: Keiran
+title: Sitecore on AWS
 ---
+# 
+
 ## Introduction
 
 Sitecore is one of the most popular and feature rich Content Management Systems (CMS) out there today. Mostly deployed in more traditional on-premise topologies, I recently was engaged to work with a client to install and configure it on AWS. 
