@@ -3,7 +3,6 @@ layout: post
 author: Keiran
 title: Sitecore on AWS
 ---
-# 
 
 ## Introduction
 
