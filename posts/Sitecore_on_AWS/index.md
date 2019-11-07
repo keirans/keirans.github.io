@@ -1,28 +1,26 @@
 ---
 layout: post
 ---
-# Sitecore on AWS with EC2, RDS and Elasticache
-
 ## Introduction
 
-Sitecore is one of the most popular and feature rich Content Management Systems (CMS) out there today. Mostly deployed in more traditional on-premise topologies, I recently was engaged to work with a client to install and configure it in AWS. 
+Sitecore is one of the most popular and feature rich Content Management Systems (CMS) out there today. Mostly deployed in more traditional on-premise topologies, I recently was engaged to work with a client to install and configure it on AWS. 
 
-My  goal was to offload as much of Sitecores dependancies off to native AWS Services to keep the automation levels high, the management levels low and to represent as much of the solution as code as possible.
+My  goal was to offload as much of Sitecore's dependancies off to native AWS services to keep the automation levels high, the management levels low and to represent as much of the solution as code as possible.
 
 Sitecore doesn't officially support all these AWS services, so using them is at your risk and discretion, however the following notes are my way of giving back to the Sitecore community who's blog posts, presentations and code snippets helped me extensively when working on this project.
 
-It is worth noting that Sitecores software stack is currently being enhanced and I'd expect to see some of these steps become eventually obsoleted in public cloud environments as they move to container based deployment options, resulting in less EC2 instances being required (yay).
+It is worth noting that Sitecore's software stack is currently being enhanced and I'd expect to see some of these steps become eventually obsoleted in public cloud environments as they move to container based deployment options, resulting in less EC2 instances being required (yay).
 
 
 ## Baking suitable Windows AMI's for use as Sitecore Servers
 
 At it's core, Sitecore today is a Windows application with its main services implemented as either Windows web applications or as Windows services.
 
-As of Sitecore 9.x the application in installed across a number of servers using a Powershell module called the Sitecore Installation Framework or SIF.
+As of Sitecore 9.x the application is installed across a number of servers using a Powershell module called the Sitecore Installation Framework or SIF.
 
-As I needed to deploy a number of Windows servers of which Sitecores various roles were to be installed on, I opted to use Packer to create an AMI that had all the various dependancies required for installation in place. In the below example code, you can see my high level Packer template and some powershell snippets that install all the various dependancies automatically.
+As I needed to deploy a number of Windows servers of which Sitecore's various roles were to be installed on, I opted to use [Packer](https://packer.io) to create an AMI that had all the various dependancies required for installation in place. In the below example code, you can see my high level Packer template and some powershell snippets that install all the various dependancies automatically.
 
-A couple of important things to note is that you _*must*_ sysprep your instance before baking the AMI, the Sitecore documentation details that servers behind load balancers must have different identitites. In addition to this, the installation of the Sitecore prereqs tasks must use Packers elevated_user option to run as Administrator, failure to do so results in SIF not suceeding. You can see these configuration snippets in my example code below.
+A couple of important things to note is that you _*must*_ sysprep your instance before baking the AMI, the Sitecore documentation details that servers behind load balancers must have different identitites. In addition to this, the installation of the Sitecore prereq tasks must use Packers elevated_user option to run as Administrator, failure to do so results in SIF not succeeding. You can see these configuration snippets in my example code below.
 
 
 ### Packer Example configuration
@@ -78,10 +76,10 @@ Within the provisioning script (sitecore-bootstrap.ps1) executed by Packer I tak
 * Copy the Sitecore installation media ZIP file down from S3 to the instance
 * Unpack the ZIP into a temp directory
 * Install the Sitecore Installation Framework (SIF) powershell modules onto the host
-* Run the Install-SitecoreConfiguration cmdlet from SIF passing in the Prerequisites.json configuration file, this will orchestrate the installation of the many dependancies that Sitecore has before you can even start installing the other roles.
+* Run the Install-SitecoreConfiguration cmdlet from SIF passing in the Prerequisites.json configuration file, this will orchestrate the installation of the many dependancies that Sitecore has before you can even start installing the other roles. (There are gigabytes of them)
 * Exit and hand back to Packer for a reboot and SysPrep of the instance.
 
-Some of the sample Powershell code is below for your reference
+Some of the sample Powershell code is below for your reference;
 
 ```
 Write-Host "Extracting the Sitecore XP1 Configuration"
@@ -105,7 +103,7 @@ Install-SitecoreConfiguration -Path "C:\windows\temp\sitecore\Config\Prerequisit
 
 ## Preparing for RDS Installation
 
-The database that we opted to use was MS SQL Server 2016 SP2. This was well supported by the Vendor, the clients team and also RDS.
+Sitecore stores all of it's state in a set of Databases. The database platform that we opted to use was MS SQL Server 2016 SP2. This was well supported by the Vendor, the clients team and also RDS.
 
 To get things working, we needed to work through a few issues.
 
@@ -124,13 +122,13 @@ GO
 
 As such, you need to take all of the Sitecore web deploy packages from the installation media, unpack them and remove all the offending SQL statements and re-zip them.
 
-This is covered well at the following Sitecore blog post [Deploying Sitecore 9 in AWS RDS](https://jeroen-de-groot.com/2018/07/19/deploying-sitecore-9-in-aws-rds/) and you will have to repeat it for all the web deploy packages you use that contain the SQL logic.
+This is covered well at the following Sitecore blog post [Deploying Sitecore 9 in AWS RDS](https://jeroen-de-groot.com/2018/07/19/deploying-sitecore-9-in-aws-rds/) and you will have to repeat it for all the web deploy packages you use that contain the offending SQL logic.
 
 ### Deploying your RDS Database with AWS Cloudformation
 
 Now that we have removed the offending SQL from the installation media, we need to configure the required settings the SQL was trying to implement the RDS sanctioned way, using the DBParameterGroup.
 
-In the below cloudformation example, you can see the RDS Database created and associated with the DBParameterGroup suitable for Sitecore with "contained database authentication" set accordingly.
+In the below cloudformation example, you can see the RDS Database is created and associated with the DBParameterGroup suitable for Sitecore with "contained database authentication" set accordingly.
 
 Once this is in place, Sitecore will install accordingly.
 
@@ -377,6 +375,7 @@ PS C:\Windows\system32>
 
 The last thing I looked into was offloading the Session state to Elasticache, Redis is already well supported in Sitecore for this, however it was a bit light on details. After a bit of digging, I discovered the only version supported currently is 3.2.6 and this can be easily deployed using Cloudformation in a Relication group using the below CloudFormation resources.
 
+Once you get your endpoint details, you can update your Sitecore configuration with them accordingly.
 
 ```
 AWSTemplateFormatVersion: '2010-09-09'
@@ -410,5 +409,5 @@ Resources:
 
 ## Wrapping up
 
-As you can see, with a bit of effort and debugging, it is possible to offload a number of Sitecores functionality to native AWS services rather than have to go through the effort of building and mailtaining them yourself.
+As you can see, with a bit of effort and debugging, it is possible to offload a number of Sitecores functionality to native AWS services rather than have to go through the effort of building and maintaining them yourself.
 
