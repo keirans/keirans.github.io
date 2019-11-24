@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 24/11/2019   | [RDS Database exports to S3 for Sitecore](https://notes.keiran.io/posts/RDS_Exports_to_S3_for_Sitecore/) |
 | 07/11/2019   | [Running Sitecore on AWS](https://notes.keiran.io/posts/Running_Sitecore_on_AWS/) |
 | 18/09/2019   | [Pulling Puppet’s Strings with AWS OpsWorks CM](https://www.sourcedgroup.com/blog/pulling-puppets-strings-with-aws-opsworks) |
 | 08/05/2019   | [Music to My Ears – A Modern Cloud Architecture for Legacy Audio Streams](https://www.sourcedgroup.com/blog/music-to-my-ears-a-modern-cloud-architecture-for-legacy-audio-streams/) |
