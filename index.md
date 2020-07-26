@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 24/07/2020   | [My Home Automation configuration and approach](https://github.com/keirans/hass_config/) using [Home Assistant](https://www.home-assistant.io/) |
 | 24/11/2019   | [RDS Database exports to S3 for Sitecore](https://notes.keiran.io/posts/RDS_Exports_to_S3_for_Sitecore/) |
 | 07/11/2019   | [Running Sitecore on AWS](https://notes.keiran.io/posts/Running_Sitecore_on_AWS/) |
 | 18/09/2019   | [Pulling Puppet’s Strings with AWS OpsWorks CM](https://www.sourcedgroup.com/blog/pulling-puppets-strings-with-aws-opsworks) |
@@ -16,6 +17,6 @@ layout: default
 | 22/06/2017   | [Puppet Azure Metadata module for Facter](https://github.com/keirans/azuremetadata)
 | 25/05/2017   | [Testing Puppet with Bitbucket Pipelines](https://www.slideshare.net/slideshow/embed_code/key/3Cc9FViIN2HHRm)
 | 30/06/2016   | [Policy-based autosigning in Azure (Puppet.com)](https://puppet.com/blog/policy-based-autosigning-azure-cli-and-virtual-machine-tags) |
-| 09/10/2015    | [Order in a World of Snowflakes (PuppetConf)](https://www.youtube.com/watch?v=d9T80hDDZNA) |
+| 09/10/2015   | [Order in a World of Snowflakes (PuppetConf)](https://www.youtube.com/watch?v=d9T80hDDZNA) |
 | 13/06/2013   | [De-Orbiting [RedHat] Satellite Server](http://goo.gl/0CAcy) |
 | 21/05/2013   | [Bringing Order to Chaos with Puppet](https://www.slideshare.net/slideshow/embed_code/key/avj6vHPWMGOJH6)
