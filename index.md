@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 29/07/2020   | [Using AWS Lambda for Home Assistant notifications and automations](https://notes.keiran.io/posts/Lambda_Home_Assistant_Notifications/) |
 | 24/07/2020   | [My Home Automation configuration and approach](https://github.com/keirans/hass_config/) using [Home Assistant](https://www.home-assistant.io/) |
 | 24/11/2019   | [RDS Database exports to S3 for Sitecore](https://notes.keiran.io/posts/RDS_Exports_to_S3_for_Sitecore/) |
 | 07/11/2019   | [Running Sitecore on AWS](https://notes.keiran.io/posts/Running_Sitecore_on_AWS/) |
