@@ -91,27 +91,50 @@ After building and working on AWS SOE's for quite some time, here are some tips 
 ## Don't disable SELinux
 * [It's 2020](https://stopdisablingselinux.com/), and rolling it out to your fleet after you have turned it off is not a very fun exersize.
 
-## Use a config management tool
-avoid complex shell and bash scripts
-Puppet, Chef and others have great Windows support too.
+## Use a Configuration management tool
+Configuration management tools shine by helping you configure virtual machines in a delcarative way, resulting in a reduction in large complex bash and powershell scripts.
+
+In addition to this, many modern configuration management tools such as Puppet, Chef and Ansible provide you with additional functionality such as
+* Easily handling differences between Operating System types and versions
+* Integration with different operating systems package management framework (apt, rpm, yum, deb, msi, exe)
+* Creating configuration files from templates
+* Distribution of configuration files from a myriad of other sources
+* Out of the box integration with Image baking tools such as Packer
+
+A common misconception with is that Windows does not lend itself well to configuration management tools, however tools such as Chef and Puppet having mature Windows support with the [later having an extensive library of Windows modules for use.](https://forge.puppet.com/puppetlabs/windows)
 
 
+## Declare your Linux user / group ID's and keep them consistent
+A common problem that harks back to the days of more traditional system administration practices when Linux User/Group ID numbers change between SOE releases or virtual machine instances.
+
+This becomes a signifigant problem with solutions that use shared filesystems such as EFS or leverage EBS snapshots, as changes in the User ID number can result in files and directories being owned by different users than required.
+
+The best solution to this is to ensure that all software that is installed that creates user accounts have an ID registered for them in a central database, and then in the SOE code explicitly create these users / groups does so with their assigned ID. Where possible, keep these UID's consistent across all your Linux distributions.
+
+For identities for humans, it's generally best to not place these identities in the SOE, but to integrate the instance with an external directory service such as LDAP or Active Directory.
 
 
-## Declare your user ID's
-NFS, EFS, Moving EBS Volumes or Snapshots to new instances.
-Try and keep them consistent between Operating systems 
-Test for changes
+## Use Linux .d directories 
+The Linux operating system has hundreds of configuration files, many of which need settings changed to support the requirements of the application teams and business units.
 
-## Use .d directories
-avoid configuraiton file editing
+Updating configuration files in place is not often easy as their formats can vary, and although there are tools such as [Augeas](https://augeas.net/) to help with doing this in an idempotent way, configuration file changes often trend back to unmanageable sed commands run over configuration files in loops.
 
-* http://blog.siphos.be/2013/05/the-linux-d-approach/
-* https://www.redhat.com/sysadmin/etc-configuration-directories
+Fortunately, many services configuration files in Linux provide a .d directory framework that lets you drop off complimentary configuration files which are then evaluated in conjunction with the main configuration file, resulting in there being no need to edit large complex configuration files in place.
+
+This approach to configuring services also lends itself well to configuration management tools which excel at templating files and distributing small files.
+
+Some good articles about this functionality of the Linux OS can be found below
+
+* [The Linux .d Approach](http://blog.siphos.be/2013/05/the-linux-d-approach/)
+* [etc configuration directories](https://www.redhat.com/sysadmin/etc-configuration-directories)
 
 
 ## Rename the Administrator account with caution
-EC2Launch and other fun stuff
+Many Security hardening guides advocate the renaming of the Administrator account to something else to lessen the risk of brute force attacks.
+Prior to the release of EC2Launch v2 , this broke EC2Launch preventing the "Get Windows Password" functionality in the AWS console, as well as tools such as Packer that used the corrosponding API call.
+
+As a result, I recommend avoiding this process, protecting the Administrator account with a strong password and other measures.
+
 
 ## Externalise your passwords and runtime params
 Don't bake secrets and things into your AMI's that you may need to change later, resulting in unnessasary re-deployment
@@ -122,6 +145,10 @@ Build resilience into these callouts, retrys, clear error messages, etc
 
 Powershell, DSC, WMF for code consistency across releases
 Config management provides hooks into this 
+
+## Leave your timezone at UTC 
+
+
 
 ## Don't couple your userdata to a particular tool
 - ie puppet for launch directly makes upgrades and changes hard
