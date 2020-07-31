@@ -95,10 +95,12 @@ After building and working on AWS SOE's for quite some time, here are some tips 
 Configuration management tools shine by helping you configure virtual machines in a delcarative way, resulting in a reduction in large complex bash and powershell scripts.
 
 In addition to this, many modern configuration management tools such as Puppet, Chef and Ansible provide you with additional functionality such as
-* Easily handling differences between Operating System types and versions
-* Integration with different operating systems package management framework (apt, rpm, yum, deb, msi, exe)
+* Easily handling differences between Operating System types and versions for common tasks like
+  * Software and Package Management (apt, rpm, yum, deb, msi, , gem, pip, exe)
+  * User and Group Management
+  * File distribution and permission management
 * Creating configuration files from templates
-* Distribution of configuration files from a myriad of other sources
+* Providing a library of modules and example code to get you moving faster
 * Out of the box integration with Image baking tools such as Packer
 
 A common misconception with is that Windows does not lend itself well to configuration management tools, however tools such as Chef and Puppet having mature Windows support with the [later having an extensive library of Windows modules for use.](https://forge.puppet.com/puppetlabs/windows)
@@ -131,29 +133,48 @@ Some good articles about this functionality of the Linux OS can be found below
 
 ## Rename the Administrator account with caution
 Many Security hardening guides advocate the renaming of the Administrator account to something else to lessen the risk of brute force attacks.
+
 Prior to the release of EC2Launch v2 , this broke EC2Launch preventing the "Get Windows Password" functionality in the AWS console, as well as tools such as Packer that used the corrosponding API call.
 
-As a result, I recommend avoiding this process, protecting the Administrator account with a strong password and other measures.
-
+As a result, I personally recommend avoiding this process, protecting the Administrator account with a strong password and other measures.
 
 ## Externalise your passwords and runtime params
-Don't bake secrets and things into your AMI's that you may need to change later, resulting in unnessasary re-deployment
+When a SOE AMI is used to launch a EC2 Instance a number of actions are invoked through the instance user data or launch scripts baked into the AMI itself.
 
-Build resilience into these callouts, retrys, clear error messages, etc
+These actions often include tasks such as:
+* Starting services suchs as monitoring tools and security agents
+* Joining the instance to Active Directory for user authentication and group policy management
+* Integrating the instances into downstream services such as configuration management tools or software repositories
 
-## Use Powershell to it's potential !
+Many of these steps require the instance to have access to passwords or run time configuration information to suceed. When building SOE AMI's it is best to not hardcode these values into the image itself, but develop bootstrap logic that sources this from an external source such as AWS SSM Parameter Store or AWS Secrets manager.
 
-Powershell, DSC, WMF for code consistency across releases
-Config management provides hooks into this 
+Taking this approach will enasure that the SOE is free from credentials as well as portable across environment without the need for producing additional image updates.
+
+When externalising these runtime values, it's important to add resilience into the scripts that fetch them via to retry anbd backoff logic.
+
+
+## Use Powershell to it's potential across all your Windows Versions
+
+Powershell is an incredibly powerful tool for Windows Administrators.  Unfortunately depending on the version of Powershell and the features it provides vary between Windows releases, often resulting in Powershell scripts being written that leverage the lowest common denominator feature or capability that is available.
+
+But not all is lost !
+
+Microsoft provides the "Windows Management Framework" 
+
+WMF installation adds and/or updates the following features:
+
+* Windows PowerShell
+* Windows PowerShell Desired State Configuration (DSC)
+* Windows PowerShell Integrated Script Environment (ISE)
+* Windows Remote Management (WinRM)
+* Windows Management Instrumentation (WMI)
+* Windows PowerShell Web Services (Management OData IIS Extension)
+* Software Inventory Logging (SIL)
+* Server Manager CIM Provider
 
 ## Leave your timezone at UTC 
 
-
-
-## Don't couple your userdata to a particular tool
-- ie puppet for launch directly makes upgrades and changes hard
-- Provide a clear interface for launching the SOE from your Terraform modules of CFN Userdata
-- 
+* https://twitter.com/QuinnyPig/status/997178792257830912
 
 ## Store build time data for later reference and debugging
 - Build logs into CWLogs
@@ -161,11 +182,6 @@ Config management provides hooks into this
 - Run an SOS Report during bake, or in your testing tool for diffing
 - Need clear tracability of the AMI -> Code Commit or Branch/Tag
 - 
-
-## Consider your patch management Approach
-Immutable Vs Patch in place
-
-## Publish your AMI ID's through SSM or other means
 
 # Automated Testing and Debugging
 
