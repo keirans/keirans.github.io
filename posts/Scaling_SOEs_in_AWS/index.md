@@ -4,26 +4,26 @@ author: Keiran
 title: Scaling Standard Operating Environments in AWS 
 ---
 
-# Introduction to SOE's
+# Introduction to SOEs
 
 A Standard Operating Environment (SOE) implements and standardizes an operating system and its associated software, resulting in the reduction in the cost and time taken to deploy, configure, maintain, support, secure and manage the operating systems across a large fleet of virtual machine instances.
 
-In AWS environments, SOE's are distributed in the form of [Amazon Machine Images (AMIs)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html). It is not uncommon for environments of all sizes to have multiple SOE flavors that cover different Operating System types and releases, such as Microsoft Windows and various distributions of Linux and the subversions of each.
+In AWS environments, SOEs are distributed in the form of [Amazon Machine Images (AMIs)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html). It is not uncommon for environments of all sizes to have multiple SOE flavors that cover different Operating System types and releases, such as Microsoft Windows and various distributions of Linux and the subversions of each.
 
 In environments that follow the [immutable infrastructure model](https://cloudacademy.com/course/advanced-deployment-techniques-on-aws/immutable-infrastructure-2/), the SOE is released on monthly or similar cadence providing new features, capabilities, security patches and more, with mid-cycle releases often occuring to cater for emergency security patches and fixes.
 
-Once updated SOE's are produced, it then is up to downstream application teams to adopt the latest SOE as part of their continuous delivery practices and re-deploy their applications ontop of it.
+Once updated SOEs are produced, it then is up to downstream application teams to adopt the latest SOE as part of their continuous delivery practices and re-deploy their applications ontop of it.
 
-In the many AWS environments I've worked in over the years, I have observed organisations that have in excess of 10+ unique SOE's that need to be distributed to tens, of not hundreds of AWS accounts for use by a wide variety of application teams.
+In the many AWS environments I've worked in over the years, I have observed organisations that have in excess of 10+ unique SOEs that need to be distributed to tens, of not hundreds of AWS accounts for use by a wide variety of application teams.
 
-In this post, I'll detail some of the learnings I have had over the years to ensure that when building SOE's in AWS you produce a high quality product for consumption by your users.
+In this post, I'll detail some of the learnings I have had over the years to ensure that when building SOEs in AWS you produce a high quality product for consumption by your users.
 
 # Pre-Development steps to success
 ## Gather clear requirements and building solid process
 
 Before jumping into the fun stuff of writing code and building AMI's for use, the most important thing that you need to think about is the requirements you are working to and the processes you are going to implement and follow to ensure that you are always producing a high quality product for all users.
 
-When speaking to clients about SOE's, I always emphasise the need to treat each SOE as a software product that needs to align to common development standards, including:
+When speaking to clients about SOEs, I always emphasise the need to treat each SOE as a software product that needs to align to common development standards, including:
 
 - What is this image going to be used for ? 
   - Will it be used by Immutable or Long Lived Instances and what is the required release cadence for each ?
@@ -39,7 +39,7 @@ When speaking to clients about SOE's, I always emphasise the need to treat each 
 In the case of release notes and issue tracking, it is my opinion that all SOE related tasks are done so in JIRA (or a similar tracking tool), and release notes are automatically generated, reducing manual work for each release.
 
 ## Buy or Build - Evaluating the impact of using marketplace AMI's
-Many organisations often opt to use pre-configured AMI's from the AWS Marketplace to get up and running faster, using these AMI's as the basis for their SOE's instead of the vanilla ones from Microsoft, Redhat or Ubuntu.
+Many organisations often opt to use pre-configured AMI's from the AWS Marketplace to get up and running faster, using these AMI's as the basis for their SOEs instead of the vanilla ones from Microsoft, Redhat or Ubuntu.
 
 Although these can help, you should consider the following potential implications before use to ensure that they don't come with unforseen consequences.
 
@@ -51,7 +51,7 @@ Some things to think about are;
 
 * Who is going to support the AMI if you find issues with it in the future, and what is their SLA for defect resolution ?
 
-* What are the implications to your environment if a marketplace AMI is deprecicated or pulled from the marketplace suddenly ? I've encountered SOE's not being available in newly created AWS accounts because the Source AMI it is built from has been depreciated from the vendor.
+* What are the implications to your environment if a marketplace AMI is deprecicated or pulled from the marketplace suddenly ? I've encountered SOEs not being available in newly created AWS accounts because the Source AMI it is built from has been depreciated from the vendor.
 
 
 ## Start small and increment
@@ -86,7 +86,7 @@ If the concepts of CICD in an Infrastructure context is new to you, I encourage 
 
 
 # Implementation Do's and Dont's
-After building and working on AWS SOE's for quite some time, here are some tips from the trenches to help you build better AMI's for your organisations.
+After building and working on AWS SOEs for quite some time, here are some tips from the trenches to help you build better AMI's for your organisations.
 
 
 ## Don't disable SELinux
@@ -174,7 +174,7 @@ WMF installation adds and/or updates the following features:
 * Software Inventory Logging (SIL)
 * Server Manager CIM Provider
 
-When building Windows SOE's that are using pre-2016 versions, install WMF and enjoy simplified code and and Administration processes.
+When building Windows SOEs that are using pre-2016 versions, install WMF and enjoy simplified code and and Administration processes.
 
 ## Set your timezone as UTC 
 Correlating log events or scheduling tasks across timezones isn't easy, especially if each system is configured to use different regional timezones.
@@ -230,7 +230,7 @@ The first thing you need is a suitable testing tool to write your tests in. Ther
 
 ## Write your first tests
 
-Once you have selected your tool, you need to start going through your SOE's core functionality and start writing tests for them. 
+Once you have selected your tool, you need to start going through your SOEs core functionality and start writing tests for them. 
 
 I've found that simple tests for the presence of software packages or file permissions are a good starting point, and when your confidence grows, add more complex testing scenarios into the mix.
 
@@ -280,7 +280,7 @@ Most commonly, this is implemented via a Cloudformation template or a set of ter
 
 It is in this area that I recommend introducing automated security scanning for your instances.
 
-While you have EC2 instances running configuration tests, you can also invoke security scans from tools such as AWS Inspector or Qualys that have scan scheduling and invocation API's alongside running CIS configuration checks at an OS level to ensure your SOE's are compliant to your required security standards.
+While you have EC2 instances running configuration tests, you can also invoke security scans from tools such as AWS Inspector or Qualys that have scan scheduling and invocation API's alongside running CIS configuration checks at an OS level to ensure your SOEs are compliant to your required security standards.
 
 # Wrapping up
 
