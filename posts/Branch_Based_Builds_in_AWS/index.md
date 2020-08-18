@@ -47,7 +47,7 @@ In addition to this, making changes to already provisioned resources can result 
 
 
 
-![](img/Branch-To-Build-Mapping.jpg)
+![](img/Branch-To-Build-Mapping.JPG)
 
 
 
