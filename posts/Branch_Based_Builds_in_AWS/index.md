@@ -20,6 +20,7 @@ An added bonus of doing this, is that when combined with further automation such
 
 In the Image below, we demonstrate a set of simple steps in which:
 
+
 1. A CloudFormation template is created that contains:
   * 2 x EC2 Instances in an Autoscale Group
   * An Elastic Load Balancer distributing traffic to the instances
@@ -27,13 +28,35 @@ In the Image below, we demonstrate a set of simple steps in which:
 
 2. CloudFormation templates are stored in the master branch of a git repository
 
-3. A Jenkins CICD Job is associated with the master branch of the repository and when changes are pushed to it, the job either creates a new cloudformation stack for the resources, or updates the stack with the changes that have been made to the template in place.
+3. A Jenkins CICD Job is associated with the master branch of the repository and when changes are pushed or merged to it, it submits the template to the AWS CloudFormation API
+
+
+4. The CloudFormation service will either create a new CloudFormation stack and then provision the resources, or update an existing stack with the changes that have been made to the template in place.
+
 
 
 ![](img/Basic-CFN-Pipeline.jpg)
 
 
-# Immutable Infrastructure 
+
+
+# Enhancing the development flow
+In this approach, one of the challenges is that it is difficult to test and deploy changes to the infrastructure as there is a one to one mapping between the master branch and the deployed resources.
+
+In addition to this, making changes to already provisioned resources can result in errors or failures to active applications.
+
+
+
+![](img/Branch-To-Build-Mapping.jpg)
+
+
+
+
+## An Immutable Infrastructure 
+
+# A more flexible approach
+
+stack names
 
 
 # Branch builds with stateful resources - RDS Snaps
