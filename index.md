@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 27/08/2020 | [Branch based build patterns in AWS](https://notes.keiran.io/posts/Branch_Based_Builds_in_AWS/) | 
 | 3/08/2020    | [Scaling Standard Operating Environments in AWS](https://notes.keiran.io/posts/Scaling_SOEs_in_AWS/) |
 | 29/07/2020   | [Using AWS Lambda for Home Assistant notifications and automations](https://notes.keiran.io/posts/Lambda_Home_Assistant_Notifications/) |
 | 24/07/2020   | [My Home Automation configuration and approach](https://github.com/keirans/hass_config/) using [Home Assistant](https://www.home-assistant.io/) |
