@@ -58,7 +58,7 @@ If you would like to know a little bit more about the concept of immutable infra
 # Enhancing the development flow
 So, How can we enhance the development flow to implement this based on the above example ? 
 
-This is where the the concept of "Branch base builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenver a new branch is created and pushed to the repository to provision that unique set of defiined resources in that particular branch.
+This is where the the concept of "Branch based builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenver a new branch is created and pushed to the repository to provision a unique set of defined resources based on the code in that particular branch.
 
 To make things even better, when the branch is deleted, you can also look to implement the destruction of the provisioned resources associated with that branch that are no longer required.
 
@@ -199,10 +199,11 @@ Resources:
 Please note that each AWS Service has differing naming standards, and you may need to adjust this taxonimy slightly to suit it, such as replacing dashes with underscores, etc
 
 
-
-
 ## Update your tags
-You should also tag your resources accordingly for best practice, but if you do this with the above tags, you can get metrics such as how much cloud resources a particular feature branch cost from your detailed billing metrics 
+As you can see in the template, we also opted to assign tag values to the resources that match the parameters we pass in. In doing this we can more effectively track resources in the account as well as get metrics such as how much cloud resources a particular feature branch cost from your detailed billing metrics reports.
+
+You can find more out about this functionality below
+* [AWS Billing and Cost Management - Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html)
 
 ## Define a Stack Name Convention
 
