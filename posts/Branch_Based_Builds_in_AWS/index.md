@@ -287,9 +287,10 @@ A sample [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) is
   ```
 
 
-And there you have it, a quick branch based build solution with minimal changes to your code.
+And there you have it, a quick branch based build solution with minimal changes to your code !
 
-## Final throughts
+## Final thoughts
 
-The branch based build pattern provides a easy stepping stone into automation with AWS and is well suited for stateless applications such as squid proxies, however with greater automation and orchestration, in conjunction with snapshots, it can be effective for stateful workloads that leverage EBS volumes and RDS databases.
+The branch based build pattern provides a easy stepping stone into automation with AWS and is well suited for stateless applications on EC2 that are frontend with load balancers such as squid proxies, however with greater automation and orchestration, in conjunction with snapshots, it can be effective for stateful workloads that leverage EBS volumes and RDS databases as well.
+
 
