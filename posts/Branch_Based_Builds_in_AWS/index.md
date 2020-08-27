@@ -11,7 +11,7 @@ There isn't always a "best practice" that suits every single service, applicatio
 
 In this blog post, I thought I'd strip this back to basics and walk through the pattern, demonstrating it's objectives, it's capabilities and to some of it's limitations, as it's something I have taught customers and collegues a like in the past.
 
-Note: In this blog post, we will be working with AWS CloudFormation, however, this can be implemented with any tool of your choice from the AWS CLI to Hashicorp Terraform.
+_Note: In these, we will be working with AWS CloudFormation, however, this can be implemented with any tool of your choice from the AWS CLI to Hashicorp Terraform._
 
 # From Code to Cloud
 
@@ -22,9 +22,9 @@ An added bonus of doing this, is that when combined with further automation such
 In the Image below, we demonstrate a set of simple steps in which:
 
 1. A CloudFormation template is created that contains:
-  * 2 x EC2 Instances in an Autoscale Group
-  * An Elastic Load Balancer distributing traffic to the instances
-  * A Route53 DNS Record that points to the Load Balancer
+    * 2 x EC2 Instances in an Autoscale Group
+    * An Elastic Load Balancer distributing traffic to the instances
+    * A Route53 DNS Record that points to the Load Balancer
 
 2. CloudFormation templates are stored in the master branch of a git repository
 
@@ -32,18 +32,18 @@ In the Image below, we demonstrate a set of simple steps in which:
 
 4. The CloudFormation service will either create a new CloudFormation stack and then provision the resources, or update an existing stack with the changes that have been made to the template in place.
 
-When changes need to be made to the Cloud resources, the code can be commited to the repository in which the Jenkins job will then trigger a CloudFormation stack update to update and modify your resources.
+When changes need to be made to the Cloud resources, the code can be commited to the repository in which the Jenkins job will then trigger a CloudFormation stack update to update and your resources.
 
 ![](img/Basic-CFN-Pipeline.jpg)
 
 
 # Challenges and the transition to "Immutable infrastructure"
 
-This deploy and update model lends itself well to core infrastructure such as networks, dns zone configs and other resources that have low rates of change, however when it comes to applications, we often find that this approach can introduce problems as rolling back complex application changes, or testing them prior to deployment can be difficult.
+This deploy and update model lends itself well to core infrastructure that have low rates of change, however when it comes to applications, we often find that this approach can introduce problems as rolling back complex application changes, or testing them prior to deployment can be difficult.
 
 As a result, the concept of immutable application deployments arose.
 
-With immutable deployments, the objective is to never upgrade in place a deployed application and it's supporting infrastructure, but rather leverage the flexibility of the cloud providers vast resources, infrastructure as code and CICD automation to provide us the ability to deploy entire copies of the application stack with your changes in which you can transition your users to after testing.
+With immutable deployments, the objective is to never upgrade in place a deployed application and it's supporting infrastructure, but rather leverage the cloud providers vast resources in conjunction with further automation to provide us the ability to deploy entire  copies of the application stack with your changes in place in which you can transition your users to after testing.
 
 Through leveraging this pattern, in the event a problem is found on new versions, you can easily return the users back to the original copy of the application and it's supporting infrastructure if/when required as it will be running in paralell until you are confident enough that it can be discarded (known as blue/green releases), in addition to this, it also opens the door to new development workflows in which developers can develop and deploy an entire application stack that not just includes the application itself, but the entire supporting infrastructure of virtual machines, operating system configuration, scaling policies, monitoring settings and more.
 
@@ -54,11 +54,12 @@ If you would like to know a little bit more about the concept of immutable infra
 
 
 # Enhancing the development flow
+
 So, How can we enhance the development flow to implement this based on the above example ? 
 
 This is where the the concept of "Branch based builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenver a new branch is created and pushed to the repository to provision a unique set of defined resources based on the code in that particular branch.
 
-To make things even better, when the branch is deleted, you can also look to implement the destruction of the provisioned resources associated with that branch that are no longer required.
+To make things even better, when the branch is deleted, you coiuld also look to implement the destruction of any provisioned resources associated with that branch that are no longer required.
 
 The image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
 
@@ -73,7 +74,9 @@ The first thing we need to do is to introduce some new parameters into our Cloud
 
 In this case, we will be introducing the following
 * App
-  * The application name prefix for our deployment. In our example, we will call this 'app'. In real world examples this would be something descriptive of the application being run, such as squid, web, bastion, etc
+  * The application name prefix for our deployment.
+
+    In our example, we will call this 'app'. In real world examples this would be something descriptive of the application being run, such as squid, web, bastion, etc
 
 * Branch
   * This parameter represents the branch of the repository containing the template
@@ -82,9 +85,12 @@ In this case, we will be introducing the following
   * This parameter represents the build number from your CICD tool
 
 * Environment
-  * This parameter represents the environment or service tier the deployment is being done in. This varies between organisations, however values such as prod, nonp, uat, dev are common. In this example we will use nonp for "Non-Production"
+  * This parameter represents the environment or service tier the deployment is being done in.
+  
+    This varies between organisations, however values such as prod, nonp, uat, dev are common. In this example we will use nonp for "Non-Production"
 
 ## Adjusting your resource names
+
 When provisioning resources in your AWS account it is a good practice to define and adhere to a resource naming standard, using the above Parameters, we will create all resources with the following naming convention
 
 ```
@@ -97,7 +103,7 @@ In doing this
 * It helps when navigating through your resources in the console or via CLI output as things will be clean and consistent
 * It allows you identify the source of the resource creation to a particular git commit or CICD Job
 
-In the below code example, I demonstrate how this has been implemented for a Load Balancer and Corrosponding Route53 DNS Record.
+In the below code, I demonstrate how this has been implemented for a Load Balancer and Corrosponding Route53 DNS Record.
 
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
@@ -201,9 +207,9 @@ You can find more out about this functionality below
 * [AWS Billing and Cost Management - Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html)
 
 ## Define a Stack Name Convention
-The final step before moving onto the CICD component is defining a CloudFormation Stack name 
+The final step before moving onto the CICD component is defining a CloudFormation Stack name format.
 
-Standardising the stack name format will allow us to ensure that there is no name collisions, we can easily map created resources back to stacks as well as programatically discover and destroy them if/when required.
+Standardising the stack name format will allow us to ensure that there is no name collisions at the CloudFormation deployment layer and keeping them consistent with resource names means we can easily map created resources back to stacks as well as programatically discover and destroy them if/when required.
 
 In this example, we will follow the resource naming convention, and create stacks with the following standard
 
@@ -213,27 +219,27 @@ In this example, we will follow the resource naming convention, and create stack
 
 ## Tying it together with CICD
 
-Once your template has been updated, we can start on the automation of the deployment itself using a CICD Tool, in this case, we will use the popular Jenkins.
+Once your template has been updated, we can start on the automation of the deployment itself using a CICD Tool, in this case, we will use the ever popular Jenkins.
 
-The installation and configuration of the Jenkins server is out of scope for this post, however the following steps need to be completed.
+The installation and configuration of the Jenkins server is out of scope, however the following steps need to be completed and I suggest reading the [Getting Started Guide first](https://www.jenkins.io/doc/book/pipeline/getting-started/)
 
 1. Install the Jenkins Software
-2. Ensure that the Jenkins install has the AWS Steps Plugin installed
-3. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains our Template
-4. Store a set of AWS IAM Credentials in the Jenkins credentials store that can be retreived from the Jenkins pipelines steps, in this case, they are stored in a value called ```AWSDemoCredentials```
-
-You can find more about this setup process at the below location:
-* https://www.jenkins.io/doc/book/pipeline/getting-started/
+2. Ensure that the [AWS Steps Plugin is installed](https://github.com/jenkinsci/pipeline-aws-plugin)
+3. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains our Templates
+4. Store a set of [AWS IAM Credentials in the Jenkins credentials store](https://support.cloudbees.com/hc/en-us/articles/360027893492-How-To-Authenticate-to-AWS-with-the-Pipeline-AWS-Plugin) that can be retreived from the Jenkins pipelines steps, in this case, they are stored in a value called ```AWSDemoCredentials```
 
 When this is done, we now introduce a Jenkinsfile into our repository that contains steps to deploy our CloudFormation template whenever this branch is pushed.
 
-A sample Jenkinsfile is provided below that defines a set of stages that will execute when the code is pushed to the repository, they are
+A sample Jenkinsfile is provided below that defines a set of stages that will execute when the branch is pushed to the repository, these are
 
-1. Validate Template
-  * Check the Validity of the template.yaml file in the repository
-  
-2. Create a 
+1. Validate template syntax
+    * Check the Validity of the template.yaml file in the repository
 
+2. Using the AWS Steps plugin functions
+    * Retreive the AWS Credentials from the store
+    * Create a new CloudFormation stack based on the contents of the template in the ap-southeast-2 region, passing in the relevant Environment, Branch and Build ID as template parameters.
+
+3. Once completed, pause waiting for user confirmation to delete the stack when you have finished with it.
 
 
   ```Groovy
@@ -274,15 +280,6 @@ A sample Jenkinsfile is provided below that defines a set of stages that will ex
   ```
 
 
-
-
-
-
-
-
-
-# Handling stateful resources
-# Branch builds with stateful resources - RDS Snaps
 
 
 # Thanks and Acknowledgements
