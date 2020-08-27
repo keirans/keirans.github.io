@@ -59,7 +59,7 @@ So, How can we enhance the development flow to implement this based on the above
 
 This is where the the concept of "Branch based builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenver a new branch is created and pushed to the repository to provision a unique set of defined resources based on the code in that particular branch.
 
-To make things even better, when the branch is deleted, you coiuld also look to implement the destruction of any provisioned resources associated with that branch that are no longer required.
+To make things even better, when the branch is deleted, you could also look to implement the destruction of any provisioned resources associated with that branch that are no longer required.
 
 The image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
 
@@ -70,7 +70,9 @@ The image below visualises this workflow, each branch of the application reposit
 So what do we need to do first to acheive this pattern ?
 
 ## Parameterising your template
-The first thing we need to do is to introduce some new parameters into our CloudFormation Template. Parameters enable you to input custom values to your template each time you create or update a stack.
+The first thing we need to do is to introduce some new parameters into our CloudFormation Template.
+
+Parameters enable you to input custom values to your template each time you create or update a stack.
 
 In this case, we will be introducing the following
 * App
@@ -91,19 +93,19 @@ In this case, we will be introducing the following
 
 ## Adjusting your resource names
 
-When provisioning resources in your AWS account it is a good practice to define and adhere to a resource naming standard, using the above Parameters, we will create all resources with the following naming convention
+When provisioning resources in your AWS account it is a good practice to define and adhere to a resource naming standard. Using the above Parameters, we will create all resources with the following naming convention.
 
 ```
 <app>-<environment>-<branch>-<build>
 ```
 
-In doing this 
+In doing this;
 
 * It prevents situations where resources conflict with the same name preventing creation, such as trying to create a load balancer, DNS record or SQS Queue with the same name
-* It helps when navigating through your resources in the console or via CLI output as things will be clean and consistent
-* It allows you identify the source of the resource creation to a particular git commit or CICD Job
+* It helps when navigating through your resources in the console or via CLI output as things will be clean and consistent, making filtering easy
+* It allows you identify the source of the resource creation to a particular git repository branch or CICD Job
 
-In the below code, I demonstrate how this has been implemented for a Load Balancer and Corrosponding Route53 DNS Record.
+In the below code, I demonstrate how this has been implemented for a Load Balancer and corrosponding Route53 DNS Record.
 
 ```yaml
 AWSTemplateFormatVersion: '2010-09-09'
