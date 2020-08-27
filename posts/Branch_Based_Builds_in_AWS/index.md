@@ -242,7 +242,7 @@ A sample [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) is
 
 2. Using the AWS Steps plugin functions
     * Retreive the AWS Credentials from the store
-    * Create a new CloudFormation stack based on the contents of the template in the ap-southeast-2 region, passing in the relevant Environment, Branch and Build ID as template parameters.
+    * Create a new CloudFormation stack using our naming convention of ```<app>-<environment>-<branch>-<build>``` that uses a combination of the contents of the template file and the relevant Environment, Branch and Build ID as template parameters.
 
       These parameters will flow through the template, influencing the names of the resources being created and the tags on them.
 
