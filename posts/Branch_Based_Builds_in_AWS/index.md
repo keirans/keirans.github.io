@@ -7,9 +7,9 @@ title: Branch Based deployment patterns on AWS
 # Introduction
 AWS provides many ways to deploy your applications to its vast ranges of services using an infrastructure as code approach.
 
-There isn't always a "best practice" that suits every single service, application workload, developer worklflow or tool, however there are some well oiled approaches that have served my collegues and I well over the years, one of which is the "Branch based build" pattern.
+There isn't always a "best practice" that suits every single service, application workload, developer workflow or tool, however there are some well oiled approaches that have served my collegues and I well over the years, one of which is the "Branch based build" pattern.
 
-In this blog post, I thought I'd strip this back to basics and walk through the pattern, demonstrating it's objectives, it's capabilities and to some of it's limitations, as it's something I have taught customers and collegues a like in the past.
+In this blog post, I thought I'd strip this back to basics and walk through the pattern, demonstrating it's objectives, it's capabilities as it's something I have taught customers and collegues alike in the past.
 
 _Note: In these, we will be working with AWS CloudFormation, however, this can be implemented with any tool of your choice from the AWS CLI to Hashicorp Terraform._
 
@@ -199,11 +199,14 @@ Resources:
       TTL: 60
 ```
 
+
 _Note:  Be aware that each AWS Service has differing naming standards and boundaries, as such you may need to adjust this naming convention slightly to suit it, such as replacing dashes with underscores, etc_
 
 
 ## Update your tags
-As you can see in the template, I also opted to assign tag values to the resources that match the parameters we pass in. In doing this we can more effectively track resources in the account as well as get metrics such as how much cloud resources a particular feature branch cost from your detailed billing metrics reports.
+As you can see in the template, I also opted to assign tag values to the resources that match the parameters we pass in.
+
+In doing this we can more effectively track resources in the account as well as get metrics such as how much cloud resources a particular feature branch cost from your detailed billing metrics reports.
 
 You can find more out about this functionality below
 * [AWS Billing and Cost Management - Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html)
@@ -227,12 +230,12 @@ The installation and configuration of the Jenkins server is out of scope, howeve
 
 1. Install the Jenkins Software
 2. Ensure that the [AWS Steps Plugin is installed](https://github.com/jenkinsci/pipeline-aws-plugin)
-3. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains our Templates
+3. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains your Templates
 4. Store a set of [AWS IAM Credentials in the Jenkins credentials store](https://support.cloudbees.com/hc/en-us/articles/360027893492-How-To-Authenticate-to-AWS-with-the-Pipeline-AWS-Plugin) that can be retreived from the Jenkins pipelines steps, in this case, they are stored in a value called ```AWSDemoCredentials```
 
 When this is done, we now introduce a Jenkinsfile into our repository that contains steps to deploy our CloudFormation template whenever this branch is pushed.
 
-A sample Jenkinsfile is provided below that defines a set of stages that will execute when the branch is pushed to the repository, these are
+A sample [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) is provided below that defines a set of stages that will execute when the branch is pushed to the repository, these are:
 
 1. Validate template syntax
     * Check the Validity of the template.yaml file in the repository
@@ -241,7 +244,9 @@ A sample Jenkinsfile is provided below that defines a set of stages that will ex
     * Retreive the AWS Credentials from the store
     * Create a new CloudFormation stack based on the contents of the template in the ap-southeast-2 region, passing in the relevant Environment, Branch and Build ID as template parameters.
 
-3. Once completed, pause waiting for user confirmation to delete the stack when you have finished with it.
+      These parameters will flow through the template, influencing the names of the resources being created and the tags on them.
+
+3. Once completed, the job will pause waiting for user confirmation to delete the stack when you have finished with it.
 
 
   ```Groovy
@@ -282,10 +287,9 @@ A sample Jenkinsfile is provided below that defines a set of stages that will ex
   ```
 
 
+And there you have it, a quick branch based build solution with minimal changes to your code.
 
+## Final throughts
 
-# Thanks and Acknowledgements
-Teammates who taught me this over the yars, and also to Gus who's teachings historically I leveraged for this post.
+The branch based build pattern provides a easy stepping stone into automation with AWS and is well suited for stateless applications such as squid proxies, however with greater automation and orchestration, in conjunction with snapshots, it can be effective for stateful workloads that leverage EBS volumes and RDS databases.
 
-# References
-  * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
