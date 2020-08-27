@@ -62,24 +62,154 @@ This is where the the concept of "Branch base builds" comes into play, in this m
 
 To make things even better, when the branch is deleted, you can also look to implement the destruction of the provisioned resources associated with that branch that are no longer required.
 
-In the image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
+The image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
 
 
 ![](img/Branch-To-Build-Mapping.JPG)
 
 
-
-
-
-
 So what do we need to do first to acheive this pattern ?
 
-## Adding additional parameters to your templates
+## Parameterising your template
+The first thing we need to do is to introduce some new parameters into our CloudFormation Template. Parameters enable you to input custom values to your template each time you create or update a stack.
 
-## 
+In this case, we will be introducing the following
+* App
+  * The application name prefix for our deployment. In our example, we will call this 'app'. In real world examples this would be something descriptive of the application being run, such as squid, web, bastion, etc
+
+* Branch
+  * This parameter represents the branch of the repository containing the template
+
+* Build
+  * This parameter represents the build number from your CICD tool
+
+* Environment
+  * This parameter represents the environment or service tier the deployment is being done in. This varies between organisations, however values such as prod, nonp, uat, dev are common. In this example we will use nonp for "Non-Production"
+
+## Adjusting your resource names
+When provisioning resources in your AWS account it is a good practice to define and adhere to a resource naming standard, using the above Parameters, we will create all resources with the following naming convention
+
+```
+<app>-<environment>-<branch>-<build>
+```
+
+In doing this 
+
+* It prevents situations where resources conflict with the same name value preventing creation, such as trying to create a load balancer, DNS record or SQS Queue with the same name
+* It helps when navigating through your resources in the console or via CLI output
+* It allows you identify the source of the resource creation to a particular git commit or CICD Job
+
+In the below code example, I demonstrate how this has been implemented for a Load Balancer and Corrosponding Route53 DNS Record.
+
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Example CFN Template example snippet
+
+Parameters:
+
+  Branch:
+    Type: String
+    Default: master
+    Description: The value of the Branch tag for all resources
+
+  Build:
+    Type: String
+    Default: 1
+    Description: The value of the Build tag for all resources
+
+  App:
+    Type: String
+    Default: app
+    Description: The application prefix for all resources
+
+  Environment:
+    Type: String
+    Description: Deployment environment
+    Default: nonp
+    AllowedValues:
+      - prod
+      - nonp
+      - dev
+    ConstraintDescription: Must be one of 'prod, nonp, or dev'
 
 
-## Jenkins Configuration
+Resources:
+
+  # Create an ELB with the ${App}-${Environment}-${Branch}-${Build}
+  # name 
+
+  InternalELB:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      LoadBalancerName:
+        !Join
+          - "-"
+          - - !Ref App
+            - !Ref Environment
+            - !Ref Branch
+            - !Ref Build
+      Instances: 
+        - !Ref InstanceA
+        - !Ref InstanceB
+      HealthCheck:
+        HealthyThreshold: 3
+        Interval: 6
+        Target: TCP:443
+        Timeout: 5
+        UnhealthyThreshold: 4
+      Listeners:
+        - InstancePort: 443
+          InstanceProtocol: TCP
+          LoadBalancerPort: 443
+          Protocol: TCP
+      Tags: 
+        - Key: App
+          Value: !Ref App
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Branch
+          Value: !Ref Branch
+        - Key: Build
+          Value: !Ref Build
+
+  #
+  # Create a ${App}-${Environment}-${Branch}-${Build}.domain.example.com
+  # DNS record for our load balancer deployments load balancer
+  #
+
+  InternalELBDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name: 
+        Fn::Join:
+          - '.'
+          - - !Sub "${App}-${Environment}-${Branch}-${Build}"
+            - "domain.example.com."
+      HostedZoneId: !Ref PublicHostedZoneId
+      ResourceRecords:
+        - "Fn::GetAtt": [ InternalELB, DNSName ]
+      Type: CNAME
+      TTL: 60
+```
+
+
+
+
+Please note that each AWS Service has differing naming standards, and you may need to adjust this taxonimy slightly to suit it, such as replacing dashes with underscores, etc
+
+
+
+
+## Update your tags
+You should also tag your resources accordingly for best practice, but if you do this with the above tags, you can get metrics such as how much cloud resources a particular feature branch cost from your detailed billing metrics 
+
+## Define a Stack Name Convention
+
+## Tie it together with CICD (Jenkins)
+
+Once your template has been updated, we can start on the automation of the deployment
+
 - Create a "Multi-Branch Pipeline"
 - Link to your reposiotry
 
@@ -101,3 +231,6 @@ So what do we need to do first to acheive this pattern ?
 
 # Thanks and Acknowledgements
 Teammates who taught me this over the yars, and also to Gus who's teachings historically I leveraged for this post.
+
+# References
+  * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
