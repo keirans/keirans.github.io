@@ -39,7 +39,7 @@ When changes need to be made to the Cloud resources, the code can be commited to
 
 # Challenges and the transition to "Immutable infrastructure"
 
-This deploy and update model lends itself well to core infrastructure that have low rates of change, however when it comes to applications, we often find that this approach can introduce problems as rolling back complex application changes, or testing them prior to deployment can be difficult.
+This deploy and update model lends itself well to core infrastructure that have low rates of change, however when it comes to applications, we often find that this can introduce problems as rolling back complex application changes, or testing them prior to deployment can be difficult.
 
 As a result, the concept of immutable application deployments arose.
 
