@@ -216,21 +216,25 @@ In this example, we will follow the resource naming convention, and create stack
 Once your template has been updated, we can start on the automation of the deployment itself using a CICD Tool, in this case, we will use the popular Jenkins.
 
 The installation and configuration of the Jenkins server is out of scope for this post, however the following steps need to be completed.
+
 1. Install the Jenkins Software
 2. Ensure that the Jenkins install has the AWS Steps Plugin installed
 3. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains our Template
-4. Store a set of AWS IAM Credentials in the Jenkins credentials store that can be retreived from the Jenkins
+4. Store a set of AWS IAM Credentials in the Jenkins credentials store that can be retreived from the Jenkins pipelines steps, in this case, they are stored in a value called ```AWSDemoCredentials```
 
-https://www.jenkins.io/doc/book/pipeline/getting-started/
+You can find more about this setup process at the below location:
+* https://www.jenkins.io/doc/book/pipeline/getting-started/
 
-In this example, we need to
-1. Use the Jenkins Crede
-1. Ensure that the Jenkins install has the AWS Steps Plugin installed and has Docker support
-2. Create a new Jenkins "Multi-Branch Pipeline" job and associate the Git Repostory that contains our Template
+When this is done, we now introduce a Jenkinsfile into our repository that contains steps to deploy our CloudFormation template whenever this branch is pushed.
+
+A sample Jenkinsfile is provided below that defines a set of stages that will execute when the code is pushed to the repository, they are
+
+1. Validate Template
+  * Check the Validity of the template.yaml file in the repository
+  
+2. Create a 
 
 
-
-Introduce a Jenkins file into our repository that contains steps to deploy our cloud formation template
 
   ```Groovy
   pipeline {
@@ -250,13 +254,13 @@ Introduce a Jenkins file into our repository that contains steps to deploy our c
           stage('Create Stack') {
               steps {
                   withAWS(region:'ap-southeast-2',credentials:'AWSDemoCredentials') {
-                      cfnUpdate(file: 'template.yaml', stack:"app-${ENVIRONMENT}-${GIT_BRANCH}-${BUILD_ID}" , pollInterval:1000)
+                      cfnUpdate(file: 'template.yaml', stack:"app-${ENVIRONMENT}-${GIT_BRANCH}-${BUILD_ID}",params:["app=app,Environment=${ENVIRONMENT},Branch=${GIT_BRANCH},Build=${BUILD_ID}"] ,pollInterval:1000)
                   }
               }
           }
           stage('Delete Stack') {
               input { 
-                  message "Should we tear down the deployment ?"
+                  message "Are you done with this build - Should we delete the CFN Stack ?"
                   ok "Yes, We should"
               }
               steps {
