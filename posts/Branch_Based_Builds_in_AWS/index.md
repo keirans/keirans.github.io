@@ -117,21 +117,21 @@ Parameters:
   Branch:
     Type: String
     Default: master
-    Description: The value of the Branch tag for all resources
+    Description: The value of the Branch for resources
 
   Build:
     Type: String
     Default: 1
-    Description: The value of the Build tag for all resources
+    Description: The value of the Build for resources
 
   App:
     Type: String
     Default: app
-    Description: The application prefix for all resources
+    Description: The application prefix for resources
 
   Environment:
     Type: String
-    Description: Deployment environment
+    Description: The Deployment environment
     Default: nonp
     AllowedValues:
       - prod
