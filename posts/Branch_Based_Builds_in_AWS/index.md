@@ -40,11 +40,11 @@ When changes need to be made to the Cloud resources, the code can be commited to
 
 # Challenges and the transition to "Immutable infrastructure"
 
-This deploy and update model lends itself well to core infrastructure such as networks, dns zone config, however when it comes to applications, we often see this approach as something that can introduce problems as rolling back complex application changes, or testing them prior being deployed can be difficult.
+This deploy and update model lends itself well to core infrastructure such as networks, dns zone configs and other resources that have low rates of change, however when it comes to applications, we often find that this approach can introduce problems as rolling back complex application changes, or testing them prior to deployment can be difficult.
 
 As a result, the concept of immutable application deployments arose.
 
-With immutable deployments, the objective is to never upgrade in place deployed application and supporting infrastructure, but rather leverage the flexibility of the cloud providers vast resources, infrastructure as code and CICD automation to provide us the ability to deploy entire copies of subsequent versions of the entire application which use different configuration in which you can transition your users to after testing.
+With immutable deployments, the objective is to never upgrade in place a deployed application and it's supporting infrastructure, but rather leverage the flexibility of the cloud providers vast resources, infrastructure as code and CICD automation to provide us the ability to deploy entire copies of the application stack with your changes in which you can transition your users to after testing.
 
 Through leveraging this pattern, in the event a problem is found on new versions, you can easily return the users back to the original copy of the application and it's supporting infrastructure if/when required as it will be running in paralell until you are confident enough that it can be discarded (known as blue/green releases), in addition to this, it also opens the door to new development workflows in which developers can develop and deploy an entire application stack that not just includes the application itself, but the entire supporting infrastructure of virtual machines, operating system configuration, scaling policies, monitoring settings and more.
 
@@ -62,14 +62,24 @@ This is where the the concept of "Branch base builds" comes into play, in this m
 
 To make things even better, when the branch is deleted, you can also look to implement the destruction of the provisioned resources associated with that branch that are no longer required.
 
-So what do we need to do first ?
+In the image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
+
+
+![](img/Branch-To-Build-Mapping.JPG)
+
+
+
+
+
+
+So what do we need to do first to acheive this pattern ?
 
 ## Adding additional parameters to your templates
 
 ## 
 
 
-## Jenkins COnfiguration
+## Jenkins Configuration
 - Create a "Multi-Branch Pipeline"
 - Link to your reposiotry
 
@@ -80,7 +90,7 @@ So what do we need to do first ?
 
 
 
-![](img/Branch-To-Build-Mapping.JPG)
+
 
 
 
