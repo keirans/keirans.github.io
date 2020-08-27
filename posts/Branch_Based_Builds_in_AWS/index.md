@@ -9,7 +9,7 @@ AWS provides many ways to deploy your applications to its vast ranges of service
 
 There isn't always a "best practice" that suits every single service, application workload, developer workflow or tool, however there are some well oiled approaches that have served my collegues and I well over the years, one of which is the "Branch based build" pattern.
 
-In this blog post, I thought I'd strip this back to basics and walk through the pattern, demonstrating it's objectives and capabilities as it's something I have taught customers and collegues alike in the past.
+In this blog post, I thought I'd strip this back to basics and walk through the pattern, demonstrating it's objectives and capabilities as it's something I have taught customers and collegues alike in the past, but never wrote down.
 
 _Note: In these, we will be working with AWS CloudFormation, however, this can be implemented with any tool of your choice from the AWS CLI to Hashicorp Terraform._
 
