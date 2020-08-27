@@ -17,7 +17,7 @@ _Note: In these, we will be working with AWS CloudFormation, however, this can b
 
 When cloud engineers use an Infrastruture as code approach for resource provisioning, it is best practice to store this code in a version control system such as git to track its history as you would for any other system or software product.
 
-An added bonus of doing this, is that when combined with further automation such as a CICD Tool the code in the git repository can be used to automatically deploy the cloud resources required to run your application.
+An added bonus of doing this, is that when combined with further automation such as a CICD tool the code in the git repository can be used to automatically deploy the cloud resources required to run your application.
 
 In the Image below, we demonstrate a set of simple steps in which:
 
@@ -32,7 +32,7 @@ In the Image below, we demonstrate a set of simple steps in which:
 
 4. The CloudFormation service will either create a new CloudFormation stack and then provision the resources, or update an existing stack with the changes that have been made to the template in place.
 
-When changes need to be made to the Cloud resources, the code can be commited to the repository in which the Jenkins job will then trigger a CloudFormation stack update to update and your resources.
+When changes need to be made to the cloud resources, the code can be commited to the repository in which the Jenkins job will then trigger a CloudFormation stack update to update and your resources.
 
 ![](img/Basic-CFN-Pipeline.jpg)
 
@@ -57,7 +57,7 @@ If you would like to know a little bit more about the concept of immutable infra
 
 So, How can we enhance the development flow to implement this based on the above example ? 
 
-This is where the the concept of "Branch based builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenver a new branch is created and pushed to the repository to provision a unique set of defined resources based on the code in that particular branch.
+This is where the the concept of "Branch based builds" comes into play, in this model, we continue to store all of our code in git, however we configure our CICD tool, in this case Jenkins to take a set of actions whenever a new branch is created and pushed to the repository to provision a unique set of defined resources based on the code in that particular branch.
 
 To make things even better, when the branch is deleted, you could also look to implement the destruction of any provisioned resources associated with that branch that are no longer required.
 
@@ -292,5 +292,7 @@ And there you have it, a quick branch based build solution with minimal changes 
 ## Final thoughts
 
 The branch based build pattern provides a easy stepping stone into automation with AWS and is well suited for stateless applications on EC2 that are frontend with load balancers such as squid proxies, however with greater automation and orchestration, in conjunction with snapshots, it can be effective for stateful workloads that leverage EBS volumes and RDS databases as well.
+
+However, do keep in mind that some services don't lend themselves well to this approach for release management, providing their own preferred build and deployment workflows, and it is important to research and evaluate these in when implementing your solutions.
 
 
