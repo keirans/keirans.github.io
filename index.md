@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 25/03/2021   | [Whitepaper - Cloud Deployment Patterns](https://www.sourcedgroup.com/resources/cloud-deployment-patterns) + [(Local Mirror)](./posts/Sourced_Cloud_Deployment_Patterns_Whitepaper.pdf)
 | 1/11/2020    | [AWS Cloud Security Virtual Event - Architecting for PCI DSS Compliance on AWS (Labs & Video)](https://virtual.awssecurityevents.com/workshops/module4.html) | 
 | 27/08/2020   | [Branch based build patterns in AWS](https://notes.keiran.io/posts/Branch_Based_Builds_in_AWS/) | 
 | 3/08/2020    | [Scaling Standard Operating Environments in AWS](https://notes.keiran.io/posts/Scaling_SOEs_in_AWS/) |
