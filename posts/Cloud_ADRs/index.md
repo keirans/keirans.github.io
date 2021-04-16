@@ -62,16 +62,9 @@ We needed a clear way to define and colloborate on our AWS development standards
 ## What are ADR's ? 
 Familiar to many who are experienced developers, but maybe not to those who have a more traditional infrastructre backround such as myself, ADR's are described as
 
-    An Architectural Decision (AD) is a software design choice 
-    that addresses a functional or non-functional requirement
-    that is architecturally significant.
-
-    An Architectural Decision Record (ADR) captures a single 
-    AD, such as often done when writing personal notes or
-    meeting minutes; the collection of ADRs created and
-    maintained in a project constitute its decision log. 
-
-    Source: adr.github.io
+* _An Architectural Decision (AD) is a software design choice that addresses a functional or non-functional requirement that is architecturally significant._
+* _An Architectural Decision Record (ADR) captures a single AD, such as often done when writing personal notes or meeting minutes; the collection of ADRs created and maintained in a project constitute its decision log._
+  * Source: adr.github.io
 
 
 ## How to they work ? 
@@ -96,7 +89,7 @@ As ADRs are stored in git, your version control software such as github can then
 
 Within our environment, we created the ADR git repository and opted to use the simple [ADR Tools](https://github.com/npryce/adr-tools) to automate the management of the ADR files in conjunction with Github to keep the process consistent.
 
-We then worked with the development team to define a backlog of problematic and missing standards that were causing developer friction in which we started working through to assist the development team, and held a series of team workshops to bring attention and alignment to them as they were phased in.
+We then worked with the development team to define a backlog of problematic and missing standards that were causing developer friction of which we started working through to assist the development team, and held a series of team workshops to bring attention and alignment to them as they were phased in.
 
 Out initial ADR's for the AWS platform included: 
 
