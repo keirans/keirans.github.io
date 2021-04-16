@@ -22,19 +22,19 @@ This platform is built using a wide range of technologies that includes:
   * NodeJS
   * Puppet
 
-The initial project initially commenced with a core platform engineering team of approximately 10 co-located individualsto build it's [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) foundations, however it rapidly grew as new features needed to be added and more customers were onboarded onto the platform to use it's capabilities and fix it's defects.
+The initial project initially commenced with a core platform engineering team of approximately 10 co-located individuals to build it's [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) foundations, however it rapidly grew as new features needed to be added and more customers were onboarded onto the platform to use it's capabilities and fix it's defects.
 
 Over the coming months, additional AWS platform engineers were introduced to the team to implement things such as
-* Platform wide centralised logging capabilities
+* Platform wide centralised logging
 * Windows and Linux Standard Operating Environments (SOEs)
-* Automated Cyber Defence capabilities and forensic tooling
+* Automated Cyber Defence and forensic tooling
 * Puppet Masters for long lived instance management
 * CICD pipelines for common automation actions
-* AWS Account vending automation
+* AWS Account vending
 * An extensive library of Terraform modules that would be used by customers to deploy their applications within the platform
-* Network engineers who would be responsible for the connectivity of the platform to on-premise and third parties
+* Network deployment and integration
 
-Before we knew it, the 10 person team had become almost 80, working on a codebase that was hundreds of thousands of lines in size, and as is common in large organisations these individuals were dispersed all over the world, we had representation from Sydney, Melbourne, Auckland, Wellington, Bangalore and more
+Before we knew it, the 10 person team had reached almost 100, working on a codebase that was hundreds of thousands of lines in size, and as is common in large organisations these individuals were dispersed all over the world, we had representation from Sydney, Melbourne, Auckland, Wellington, Bangalore and more
 
 # Cracks begin to appear
 
@@ -62,9 +62,14 @@ We needed a clear way to define and colloborate on our AWS development standards
 ## What are ADR's ? 
 Familiar to many who are experienced developers, but maybe not to those who have a more traditional infrastructre backround such as myself, ADR's are described as
 
-    An Architectural Decision (AD) is a software design choice that addresses a functional or non-functional requirement that is architecturally significant.
+    An Architectural Decision (AD) is a software design choice 
+    that addresses a functional or non-functional requirement
+    that is architecturally significant.
 
-    An Architectural Decision Record (ADR) captures a single AD, such as often done when writing personal notes or meeting minutes; the collection of ADRs created and maintained in a project constitute its decision log. 
+    An Architectural Decision Record (ADR) captures a single 
+    AD, such as often done when writing personal notes or
+    meeting minutes; the collection of ADRs created and
+    maintained in a project constitute its decision log. 
 
     Source: adr.github.io
 
@@ -77,7 +82,7 @@ Lightweight in nature, each ADR consists of a small markdown document stored in 
 | Heading       | Function      | 
 | ------------- | ------------- | 
 | Title         | The ID number and title of the ADR being introduced | 
-| Status        | The current status of the ADR. Accepted, Rejected, Superseded are the most common | 
+| Status        | The current status of the ADR. Accepted, Rejected, Superseded being the most common | 
 | Context       | The technical detail about the ADR, what it's objectives are and the problems it's looking to address, as well as any alternatives that were considered |
 | Decision      | The decision that is being made by ratifying the standards proposed in the ADR alongside any comments about discarding any other alternatives | 
 | Consequences  | The conseqences of implementing the ADR standards in the environment (both positive and negative) |
@@ -103,15 +108,13 @@ Out initial ADR's for the AWS platform included:
 | Semantic Versioning for Terraform Modules | Formally communicate that Terraform modules are aligning to the [semver](https://semver.org/) versioning framework  | 
 
 
-## How did this help & Wrapping up ? 
+## How did this help ?
 
-As we phased in the ADR process and introduced more standards, we found that developer friction was greatly reduced and and through the clear definition of standards we were able to automate their validation and enforcement in CICD and external governance / compliance systems more effectively increasing developer output.
+As we phased in the ADR process and introduced more standards, we found that developer friction was greatly reduced and and through the clear definition of standards we were able to automate their validation and enforcement in CICD and external governance / compliance systems more effectively increasing developer output and reducing friction.
 
-Reflecting on the project, I wish we had implemented them earlier and I'd advocate looking to start any new project of this nature by defining some of these early cloud and development standards even before development commences to pre-empt these occuring in the future and being able to scale your team more effectively.
+Reflecting on the project, I wish that I was more aware of the ADR concept and we had implemented them earlier and I'd advocate looking to start any new project of this nature by defining some of these early cloud and development standards even before development commences to pre-empt these occuring and being able to scale your team more effectively earlier.
 
 I encourage you to check out some other ADR examples and reference documentation in the below references which can help you see how other teams implement these for their projects.
-
-*
 
 * [Architectural Decision Records](https://adr.github.io/)
 * [Documenting Architecture Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions.html)
