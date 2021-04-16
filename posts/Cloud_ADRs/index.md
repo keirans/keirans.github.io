@@ -6,9 +6,9 @@ title: Democratising Cloud development standards with Architecture Design Record
 
 # Introduction
 
-For the better part of the last 18 months, I've been working as an platform engineer on a strategic cloud platform for a large Australian financial instituion.
+For the better part of the last 18 months, I've been working as an platform engineer on a strategic cloud platform for a large Australian financial institution.
 
-The goal of this inititive was to develop from the ground up a foundational AWS platform suitable for all of the groups cloud workloads from the most critical and regulated  internet facing banking applications to backend HPC clusters. 
+The goal of this initiative was to develop from the ground up a foundational AWS platform suitable for all of the groups cloud workloads from the most critical and regulated  internet facing banking applications to backend HPC clusters. 
 
 This platform is built using a wide range of technologies that includes:
 
@@ -57,10 +57,10 @@ In addition to the technical challenges, Individuals felt that they did not have
 
 # Solving this problem with ADR's
 
-We needed a clear way to define and colloborate on our AWS development standards. It was at this stage that one of my customers brought to my attention the concept of "[Architectural Decision Records](https://adr.github.io/)", or ADRs as a lightweight way for us to consolidate our standards. 
+We needed a clear way to define and collaborate on our AWS development standards. It was at this stage that one of my customers brought to my attention the concept of "[Architectural Decision Records](https://adr.github.io/)", or ADRs as a lightweight way for us to consolidate our standards. 
 
 ## What are ADR's ? 
-Familiar to many who are experienced developers, but maybe not to those who have a more traditional infrastructre backround such as myself, ADR's are described as
+Familiar to many who are experienced developers, but maybe not to those who have a more traditional infrastructure background such as myself, ADR's are described as
 
 * _An Architectural Decision (AD) is a software design choice that addresses a functional or non-functional requirement that is architecturally significant._
 * _An Architectural Decision Record (ADR) captures a single AD, such as often done when writing personal notes or meeting minutes; the collection of ADRs created and maintained in a project constitute its decision log._
@@ -83,7 +83,7 @@ Lightweight in nature, each ADR consists of a small markdown document stored in 
 
 _Note: ADR's are focused more on implementation standards, rather than being end to end architecture documents for a particular solution._
 
-As ADRs are stored in git, your version control software such as github can then be used by your development teams to discuss and revise the proposed standard using the same processes they are familiar with, and when ADR changes are merged to the master branch of the repository they are then considered active.
+As ADRs are stored in git, your version control software such as Github can then be used by your development teams to discuss and revise the proposed standard using the same processes they are familiar with, and when ADR changes are merged to the master branch of the repository they are then considered active.
 
 ## How did we implement these ? 
 
@@ -105,7 +105,7 @@ Out initial ADR's for the AWS platform included:
 
 As we phased in the ADR process and introduced more standards, we found that developer friction was greatly reduced and and through the clear definition of standards we were able to automate their validation and enforcement in CICD and external governance / compliance systems more effectively increasing developer output and reducing friction.
 
-Reflecting on the project, I wish that I was more aware of the ADR concept and we had implemented them earlier and I'd advocate looking to start any new project of this nature by defining some of these early cloud and development standards even before development commences to pre-empt these occuring and being able to scale your team more effectively earlier.
+Reflecting on the project, I wish that I was more aware of the ADR concept and we had implemented them earlier and I'd advocate looking to start any new project of this nature by defining some of these early cloud and development standards even before development commences to pre-empt these occurring and being able to scale your team more effectively earlier.
 
 I encourage you to check out some other ADR examples and reference documentation in the below references which can help you see how other teams implement these for their projects.
 
