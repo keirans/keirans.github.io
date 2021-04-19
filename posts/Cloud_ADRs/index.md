@@ -1,7 +1,7 @@
 ---
 layout: post
 author: Keiran
-title: Democratising Cloud development standards with Architecture Design Records (ADRs)
+title: Democratising Cloud development standards with Architecture Decision Records (ADRs)
 ---
 
 # Introduction
