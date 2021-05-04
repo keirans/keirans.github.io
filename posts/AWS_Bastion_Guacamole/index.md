@@ -10,7 +10,9 @@ The following blog post details a solution that we have delivered into some of o
 
 I'm writing about it here because I think that it is a great pattern that demonstrates the power of AWS Events and serverless functions and how they can be leveraged to enhance and integrate existing software solutions that arent entirely cloud native nicely into a cloud environment.
 
-This pattern was initially architected and developed by my collegues Yuri Litvinov and Richard Nguyen, and I'm representing their work here as it's a pattern I regularly use for education and AWS Partner competency purposes. So in the case of this post, I am standing on the shoulders of giants.
+This pattern was initially architected and developed by my collegues Yuri Litvinov and Richard Nguyen, and I'm representing their work here as it's a pattern I regularly use for education and AWS Partner competency purposes. 
+
+So in the case of this post, I am standing on the shoulders of giants.
 
 One final note is that this post represents an older topology of the solution, and we have uplifted the pattern to now leverage Guacamole API's rather than working with the database directly, as well as enhancements in the event space to leverage newer capabilities where available.
 
@@ -35,10 +37,11 @@ As a result, we designed and delivered a solution that leveraged Apache Guacamol
 
 The core components are: 
 
-* Apache Guacamole
+* [Apache Guacamole](https://guacamole.apache.org/)
 
-    Deployed using EC2, RDS, ELB, VPC as well as integration into the customers AWS Managed Active Directory Service for identity.
+    Deployed using EC2, RDS, ELB & VPC as well as integration into the customers AWS Managed Active Directory Service for identity.
     Apache Guacamole is a clientless remote desktop gateway. It supports standard protocols like VNC, RDP, and SSH.
+
     Using to HTML5, once Guacamole is installed on a server, all you need to access your systems is a web browser, and it provides integration to common single sign on systems including Active Directory, while providing additional security capabilities through the introduction of MFA.
 
     To provide high quality compliance data, the EC2 Instances were configured with regular cronjobs that would copy the recorded session data from the EC2 Instances to an S3 bucket in a dedicated Compliance account using the AWS CLI where they could not be tampered with.
@@ -48,7 +51,9 @@ The core components are:
 
 * Enchilada Instance Auto Discovery automation
 
-    This automation functions by leveraging Cloudwatch Events that are associated with EC2 Instances Launching and Terminating in multiple AWS Accounts within an AWS Organisation. When these events occur, they are passed through to a centralised Lambda function that connects to the Apache Guacamole database and updates its configuration to add or remove the corresponding instance(s) from it’s configuration.
+    This automation functions by leveraging Cloudwatch Events that are associated with EC2 Instances Launching and Terminating in multiple AWS Accounts within an AWS Organisation. 
+    
+    When these events occur, they are passed through to a centralised Lambda function that connects to the Apache Guacamole database and updates its configuration to add or remove the corresponding instance(s) from it’s configuration.
 
     To ensure that the EC2 instances that are populated automatically inside the Guacamole database are configured correctly, the Lambda assumes a role into each of the AWS accounts that the EC2 instance resides in and fetches its name, DNS Name, IP address and other metadata for use.
 
@@ -63,7 +68,7 @@ The core components are:
 
 
 # High Level Solution Overview
-The 2 core components of the solution are detailed below. To align with well architected principals, please note that these components were
+The 2 core components of the solution are detailed below. To align with well architected principals, these components were
 
 * Deployed using an Infrastructure as Code approach (Terraform) and leveraged an automated CICD Pipeline to do so
 * Were built with IAM policies scoped to least privilege model, and where secrets were required such as Lambda communicating to an RDS database, they were retrieved from an external secrets management platform
@@ -83,19 +88,19 @@ The guacamole deployment was done using the following common AWS topology in the
 
 ## Enchilada Deployment
 
-The creation of connection permissions leverages the Instance Discovery automation we call Enchilada.
+The automated creation of connections in the Guacamole user interface leverages the Instance Discovery automation we call Enchilada.
 
 From the diagram below, the core components function as follows, starting from a launch or terminate of an EC2 instance, and resulting in a suitable update of the Guacamole bastion configuration.
 
 ![](img/enchilada-small.jpg)
 
-[Full size Image](img/enchilada-full.jpg)
+[Full size Diagram Image can be found here](img/enchilada-full.jpg)
 
 
 ### CloudTrail (Workload Account)
-CloudTrail tracks all changes made by users (or services) , whether through the console or programmatically through APIs or CLI toolsets.
+CloudTrail tracks all changes made by users (or services) in every account, whether through the console or programmatically through APIs or CLI toolsets.
 
-In the context of Instance auto-discovery, the following events that are of interest to Enchilada
+In the context of Instance auto-discovery, the following Cloudtrail events that are of interest to Enchilada
 
 * RunInstances : This event occurs when an instance is created
 * TerminateInstances : This event occurs when an instance is terminated
@@ -121,21 +126,21 @@ The Target for the Event Rule in this case is the Default Event Bus of the Share
 
 ### Event (Workload Account)
 
-The Event is the CloudTrail Event that will be sent to the target of the CloudWatch Rule as JSON payload when either a RunInstances or TerminateInstances event occurs.
+The Event is the CloudTrail Event that will be sent to the target of the CloudWatch Rule as a JSON payload when either a RunInstances or TerminateInstances event occurs.
 
 
 ### Default Event Bus (Shared Services Account)
 
-All AWS Accounts have a default Event Bus that can be used cross-account. The default event Bus Permissions are set to allow the entire AWS Organization to publish events to it.
+All AWS Accounts have a default Event Bus that can be used cross-account. In this environment, the default event Bus Permissions are set to allow the entire AWS Organization to publish events to it.
 
-This will provide us a stream of EC2 Launch and Terminate events from all of the workload accounts in the environment in real time in the shared services accounts default event bus.
+As a result, This will provide us a stream of EC2 Launch and Terminate events from all of the workload accounts in the environment in real time in the shared services accounts default event bus.
 
 
 ### CloudWatch Event Rule (Shared Services Account)
-CloudWatch Event Rule allows us to listen to specific events from services (including CloudTrail) and specify a target where the trigger event can be
+CloudWatch Event Rules allows us to listen to specific events from services (including CloudTrail) and specify a target where the trigger event can be
 published.
 
-For Enchilada in the Shared Services Account, we use CloudWatch Event Rule against the following custom Event Pattern.
+For Enchilada in the Shared Services Account, we use another CloudWatch Event Rule against the following custom Event Pattern.
 
 ```
 {
@@ -148,35 +153,36 @@ For Enchilada in the Shared Services Account, we use CloudWatch Event Rule again
 }
 ```
 
-The Target for the Event Rule is an SQS Queue (described below)
+The Target for the Event Rule is an SQS Queue in the Shared Services account (described below)
 
 ### SQS (Shared Services Account)
-The SQS Queue will contain messages received from the CloudWatch Event Rule (described above) that will contain all events where instances are either
-created or terminated across the workload accounts in the organisation.
+The SQS Queue as the target will start to contain messages received from the CloudWatch Event Rule (described above) that will contain all events where instances are either created or terminated across the workload accounts in the organisation.
 
 The SQS queue is used as the source event for the Lambda function (described below). 
 
-The messages must be batched and sent to Lambda to process more than one at a time as the Lambda's core functionality of updating Guacamole's database is a fairly expensive operation and must be batched where possible.
+The messages are then batched and sent to Lambda to process more than one at a time as the Lambda's core functionality of updating Guacamole's database is a fairly expensive operation and must be batched where possible.
 
 ### Lambda (Shared Services Account)
 The Enchilada Lambda function does the heavy lifting of connecting to the Guacamole Database and performing updates.
 
 Since the Lambda will require direct connectivity to the database, the Lambda will have to be configured to run inside the VPC with access to the DB backend of Apache Guacamole.
 
-The Lambda function iterates through the batch of messages received from SQS and does the following :
+The Lambda function iterates through the batch of messages received from SQS and performs the following :
 
-* For RunInstances Event type, the Lambda takes the following action(s)
+* For RunInstances Event types, the Lambda takes the following action(s)
     * Assume a role available in the Instance's Account
     * Describe the Instance and determine the platform (Windows or *nix) as well as it's Name and other connection related data
     * Create a record in the connection table in the Guacamole DB in the appropriate group associated with the AWS Account that contains the instance
 
-* For TerminateInstances Event type , the Lambda takes the following action(s)
+* For TerminateInstances Event types  the Lambda takes the following action(s)
     * Delete the record in the connection table associated with the Instance from the Guacamole DB
 
 # Customer Outcome(s)
-After the deployment of this solution the customer now has:
+After the deployment of this solution the customer now has
 
-* A seamless, secure and highly automated bastion solution for their AWS platform and associated AWS instances
+* A seamless, secure and highly automated bastion solution for their AWS platform and associated AWS instances.
+
+    When instances are launched or terminated across their workload accounts, they are automatically added or removed from the Guacamole user interface for them.
 * High confidence of audit and regulatory compliance of the environment through high quality log data and session recording
 * Simplified bastion environment authentication through the integration of Single Sign On (SSO) and MFA
 * Single point of Administration traffic for the instances on the network
@@ -195,20 +201,21 @@ In addition to the above automation, we were able to acheive each of the other o
 
 ### SESSION RECORDING
 * The Guacamole Software was configured to have Session Recording enabled for all users.
-To provide high quality compliance data, the EC2 Instances were configured with regular cronjobs that would copy the recorded session data from the EC2 Instances to an S3 bucket in a dedicated Compliance account using the AWS CLI where they could not be tampered with.
 
-This was supported for both Windows and Linux Instances.
+    To provide high quality compliance data, the EC2 Instances were configured with regular cronjobs that would copy the recorded session data from the EC2 Instances to an S3 bucket in a dedicated Compliance account using the AWS CLI where they could not be tampered with.
 
-* https://guacamole.apache.org/doc/gug/configuring-guacamole.html
+    This was supported for both Windows and Linux Instances.
+
+* [Configuring Guacamole User Guide](https://guacamole.apache.org/doc/gug/configuring-guacamole.html)
 
 ### SINGLE SIGN-ON AND MFA
 * The Guacamole Software was configured to have Single Sign-On configured through the integration with the AWS Managed Active Directory Service which contained the users identities.
 
-https://guacamole.apache.org/doc/gug/ldap-auth.html
+* [Configuring Guacamole LDAP Authentication](https://guacamole.apache.org/doc/gug/ldap-auth.html)
 
 * The Guacamole Software provides MFA support, and was enabled for all users of the solution
 
-https://guacamole.apache.org/doc/gug/totp-auth.html
+* [Configuring Guacamole MFA](https://guacamole.apache.org/doc/gug/totp-auth.html)
 
 ### AUTO DISCOVERY
 
