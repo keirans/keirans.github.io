@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 5/05/2021   | [Enchilada - Orchestrating Apache Guacamole in AWS](https://notes.keiran.io/posts/AWS_Bastion_Guacamole/) | 
 | 16/04/2021   | [Democratising Cloud development standards with Architecture Decision Records (ADRs)](https://notes.keiran.io/posts/Cloud_ADRs/) | 
 | 25/03/2021   | [Whitepaper - Cloud Deployment Patterns](https://www.sourcedgroup.com/resources/cloud-deployment-patterns) + [(Local Mirror)](./posts/Sourced_Cloud_Deployment_Patterns_Whitepaper.pdf)
 | 1/11/2020    | [AWS Cloud Security Virtual Event - Architecting for PCI DSS Compliance on AWS (Labs & Video)](https://virtual.awssecurityevents.com/workshops/module4.html) | 
