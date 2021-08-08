@@ -23,7 +23,7 @@ Baking, in this context is the following process
 * Shutdown the Instance 
 * Create a new AMI from that Instance that contains the original content + any customisations you might have made
 
-The customisations a user might look to make includes adding their applications and other software to support it so that when the instance is launched from the new AMI the application immediately comes into service without the need to do them on initial launch from a vanilla AMI which could take long periods of time or have external dependancies.
+The customisations a user might look to make includes adding their applications and other software to support it so that when the instance is launched from the new AMI the application immediately comes into service without the need to do them on initial launch from a vanilla AMI which could take long periods of time or have external dependencies.
 
 This is where tools like Hashicorp Packer, or AWS EC2 Image builder come into play. They provide a capability to automate the baking process so that you have a consistent and repeatable outcome each time.
 
@@ -72,7 +72,7 @@ A pipeline can contain multiple components (Currently up to 20), which are seque
 
 
 ## Recipes
-Recipies pull in all the components you want and sequence their execution when the instance is launched, it also defines the Source AMI that will be used to launch the instance from as well as any block device settings you want to include.
+Recipes pull in all the components you want and sequence their execution when the instance is launched, it also defines the Source AMI that will be used to launch the instance from as well as any block device settings you want to include.
 
 ![](img/Recipes.jpg)
 
@@ -114,9 +114,9 @@ This diagram uses a pipeline that creates an AMI as an example.
 
 
 * The Image Builder service launches an instance in your account leveraging all the settings in your pipeline and sub-resources configuration
-* The Recipes and Components are executed to customise the Instance for your needs and if they complete sucessfully, an AMI will be produced.
+* The Recipes and Components are executed to customise the Instance for your needs and if they complete successfully, an AMI will be produced.
 * Optionally - If testing is configured to occur in your pipeline, EC2 Image Builder service will launch another Instance in your account from your newly created AMI and execute any test cases that have been defined in your Pipelines Component definitions, increasing your confidence that your AMI is configured as you expect it.
-* Once these tasks complete sucessfully, you will have an AMI ready for use in your account as per the configuration defined in your distribution settings
+* Once these tasks complete successfully, you will have an AMI ready for use in your account as per the configuration defined in your distribution settings
 
 # Workflow
 One thing that Image Builder currently has is a strong opinion on is its development workflow.
@@ -167,12 +167,12 @@ Image Builder has extensive Terraform and Cloudformation support, and pipelines 
 
 ## Security Considerations
 
-When working with Image Bulder in security concious environments, you will be happy to know that the service leverages
+When working with Image Builder in security conscious environments, you will be happy to know that the service leverages
 * Service Linked roles with well defined IAM policies to ensure that it only has enough access into your account to do it's job
 * Supports VPC endpoints so that it does not require service related traffic to egress your environment to function
 * Supports KMS encryption for its resources to ensure that they are protected from unauthorised access
 * Natively Logs to Cloudtrail, S3 and Cloudwatch to ensure that actions inside your environment can be audited and debugged
-* Can be easily intergrated into other services within your environment through the configuration of the IAM role the instances uses on launch (See the Infrastructure configuration)
+* Can be easily integrated into other services within your environment through the configuration of the IAM role the instances uses on launch (See the Infrastructure configuration)
 * Because the Image Builder service uses Systems Manager to communicate to the instance, there is no requirement for SSH or WinRM to be enabled or exposed for use in the solution unless you have some specific reason to introduce it. As a result, you are likely have a more secure configuration out of the box. 
 
 You now know enough about EC2 Image Builder to be dangerous :)
