@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 16/09/2021   | [Sydney Devops Meetup - Lightning Talk - Cloud Standards with ADRs](https://www.youtube.com/watch?v=UtkCwHIk2ps&t=3097) |
 | 08/08/2021   | [AWS EC2 Image Builder 101](https://notes.keiran.io/posts/AWS_Image_Builder_101/) |
 | 24/06/2021   | [Home Assistant Podcast Ep 89 - Using Home Assistant to help sick family around the home with Keiran ](https://hasspodcast.io/ha089/) |
 | 5/05/2021    | [Enchilada - Orchestrating Apache Guacamole in AWS](https://notes.keiran.io/posts/AWS_Bastion_Guacamole/) | 
