@@ -5,6 +5,9 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 27/02/2026   | [Optimising Amazon Bedrock Costs in Our Agentic Tasks Platform](https://notes.keiran.io/posts/Claude_Bedrock_Tasks_Cost/)) |
+| 7/01/2026    | [Using Al to Boost Dev Efficiency and Innovation with Keiran -Devolution Podcast](https://youtu.be/0oXX84L-Evw?si=9o8CCN8ZVcat3HRa) |
+| 16/09/2021   | [Using Al to Boost Dev Efficiency and Innovation with Keiran -[Dev]olution Podcast ](https://youtu.be/0oXX84L-Evw?si=9o8CCN8ZVcat3HRa) |
 | 16/09/2021   | [Sydney Devops Meetup - Lightning Talk - Cloud Standards with ADRs](https://www.youtube.com/watch?v=UtkCwHIk2ps&t=3097) |
 | 08/08/2021   | [AWS EC2 Image Builder 101](https://notes.keiran.io/posts/AWS_Image_Builder_101/) |
 | 24/06/2021   | [Home Assistant Podcast Ep 89 - Using Home Assistant to help sick family around the home with Keiran ](https://hasspodcast.io/ha089/) |
