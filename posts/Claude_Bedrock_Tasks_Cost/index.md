@@ -262,7 +262,7 @@ The response confirms that Claude Opus 4.6 was invoked correctly through our app
 
 ## Profile‑Specific Cost Accounting
 
-With inference profiles now fully integrated into the AWS Cost Calculator, we can directly view costs broken down at the profile level rather than only at the underlying model layer. This means each profile - representing a team, workflow, or autonomous agent - exposes its own consumption footprint, giving us granular visibility into how inference activities translate into actual spend. By isolating the cost of individual profiles, we can more accurately attribute usage, validate optimizations, and forecast expenses with far greater precision, ensuring every workload is both transparent and financially accountable.
+With inference profiles now fully integrated into the AWS Cost Dashboard, we can directly view costs broken down at the profile level rather than only at the underlying model layer. This means each profile - representing a team, workflow, or a set of autonomous agents - exposes its own consumption footprint, giving us granular visibility into how inference activities translate into actual spend. By isolating the cost of individual profiles, we can more accurately attribute usage, validate optimizations, and forecast expenses with far greater precision, ensuring every workload is both transparent and financially accountable.
 
  
 
@@ -305,7 +305,7 @@ In the screenshot below, you can see the metrics available for this profile; the
 
 ## Configuring Claude to Leverage Inference Profiles
 
-Now that you’ve created inference profiles for the models you need, the next step is to configure your Claude code so requests are routed through those profiles.
+Now that you’ve created inference profiles for the models you need, the next step is to configure  Claude code so requests are routed through those profiles.
 
  
 
@@ -351,7 +351,7 @@ The configuration of these policies are detailed in the AWS Documentation here: 
 
 ## Claude Context and Token Optimisations
 
-When we first began integrating AI tools - Claude included - our goal was to make them behave as closely as possible to a real team member. To support this, we converted our Architecture Decision Records (ADRs) into AI‑friendly formats such as Kiro Rules and claude.md. These ADRs define how we work: coding standards, branching and commit practices, PR review expectations, testing patterns, and more.
+When we first began integrating AI tools - Claude included - our goal was to make them behave as closely as possible to a real team member. To support this, we converted our [Architecture Decision Records](https://notes.keiran.io/posts/Cloud_ADRs/)) (ADRs) into AI‑friendly formats such as Kiro Rules and Claude.md. These ADRs define how we work: coding standards, branching and commit practices, PR review expectations, testing patterns, and more.
 
 Our early approach involved injecting all these encoded standards into the agent’s runtime from a central Git repository. This worked initially, but over time the configuration files grew substantially. They started consuming a large portion of the model’s context window and significantly increased token usage, especially once the agents were integrated with multiple Model Context Protocol (MCP) services. The combination resulted in inflated costs and unnecessary cognitive burden on the model.
 
@@ -376,6 +376,6 @@ The resources below are highly recommended if you’re starting the transition t
 * [Extend Claude with Skills](https://code.claude.com/docs/en/skills)
 
 
-This concludes the walkthrough of our approach to optimising inference costs across the tasks platform. and I hope the techniques and patterns shared here are useful to anyone looking to apply similar improvements within their own applications or infrastructure.
+This concludes the walkthrough of our approach to optimising inference costs across the tasks platform, and I hope the techniques and patterns shared here are useful to anyone looking to apply similar improvements within their own applications or infrastructure.
 
-This post was written with assistance from AI, and I’ve made sure all examples, configurations, and recommendations are technically accurate as of the time of writing. 
+This post was written with assistance from AI, and I’ve worked to made sure all examples, configurations, and recommendations are technically accurate as of the time of writing. 
