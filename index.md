@@ -5,6 +5,7 @@ layout: default
 
 | Date        | Content            | 
 |:-------------|:------------------|
+| 27/02/2026   | [From SDKs to Skills: The Evolution of Portable AI Capabilities](https://notes.keiran.io/posts/Strands_Skills/) |
 | 27/02/2026   | [Optimising Amazon Bedrock Costs in Our Agentic Tasks Platform](https://notes.keiran.io/posts/Claude_Bedrock_Tasks_Cost/)) |
 | 16/09/2021   | [Using Al to Boost Dev Efficiency and Innovation with Keiran -[Dev]olution Podcast ](https://youtu.be/0oXX84L-Evw?si=9o8CCN8ZVcat3HRa) |
 | 16/09/2021   | [Sydney Devops Meetup - Lightning Talk - Cloud Standards with ADRs](https://www.youtube.com/watch?v=UtkCwHIk2ps&t=3097) |
