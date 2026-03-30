@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Your Engineering Foundations Matter More Than Ever"
+title: "The Cheapest AI Upgrade Is Already in Your Backlog"
 date: 2026-03-30
 categories: [AI, Engineering, DevOps]
 tags: [AI Agents, ADR, Standards, Skills, MCP, CI/CD, Agentic Development]
@@ -99,7 +99,7 @@ Centralising your standards in a well-maintained repository and expressing them 
 
 ---
 
-## The Cheapest AI Upgrade Is Already in Your Backlog
+## Your Engineering Foundations Matter More Than Ever
 
 There is a framing that recurs in conversations about AI tooling: teams want to know which model to use, which agent tooling to adopt, how to structure their prompts. These are real questions with real answers. But I do feel that they are second-priority questions.
 
