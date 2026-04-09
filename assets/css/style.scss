@@ -6,18 +6,8 @@
 .table-wrapper {
   overflow-x: visible;
 
-  table {
-    width: 100%;
-    table-layout: fixed;
-  }
-
   td {
     word-break: break-word;
     overflow-wrap: break-word;
-  }
-
-  td:first-child {
-    width: 115px;
-    white-space: nowrap;
   }
 }
