@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2021-08-08
 author: Keiran
 title: AWS EC2 Image Builder 101
 ---
@@ -55,9 +56,9 @@ In the next few sections I'll run through each of them.
 
 This defines the infrastructure within your account that the service will use to launch the Instance to be configured. This includes the VPC and Security Group configuration, the IAM Role that the instance will use, the tags assigned to it and more.
 
-![](img/Infrastructure.jpg)
+![](/posts/AWS_Image_Builder_101/img/Infrastructure.jpg)
 
-[Full size Diagram Image](img/Infrastructure.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Infrastructure.jpg)
 
 ##  Components
 Components are blocks of commands and other actions that are defined to be run on the instance to customise (and optionally test it). 
@@ -66,17 +67,17 @@ The actions can be defined as scripting language actions in Shell or Powershell,
 
 A pipeline can contain multiple components (Currently up to 20), which are sequenced in Recipes
 
-![](img/Components.jpg)
+![](/posts/AWS_Image_Builder_101/img/Components.jpg)
 
-[Full size Diagram Image](img/Components.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Components.jpg)
 
 
 ## Recipes
 Recipes pull in all the components you want and sequence their execution when the instance is launched, it also defines the Source AMI that will be used to launch the instance from as well as any block device settings you want to include.
 
-![](img/Recipes.jpg)
+![](/posts/AWS_Image_Builder_101/img/Recipes.jpg)
 
-[Full size Diagram Image](img/Recipes.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Recipes.jpg)
 
 
 ## Distribution Settings
@@ -84,9 +85,9 @@ Distribution settings define the configuration of the artefact Image Builder pro
 
 Within distribution settings you define if you are producing an AMI or a Docker image, the naming format it will have, any tags you would like applied to it as well as any other accounts or regions you might optionally want to expose or copy the artefact to.
 
-![](img/Distribution.jpg)
+![](/posts/AWS_Image_Builder_101/img/Distribution.jpg)
 
-[Full size Diagram Image](img/Distribution.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Distribution.jpg)
 
 
 ## Pipelines
@@ -97,9 +98,9 @@ The pipeline pulls together all the sub resources you have defined already so th
 
 Within the configuration , you can also set the execution of the pipeline on a schedule, or have it triggered on demand through the console or the Image Builders CLI or APIs.
 
-![](img/Pipeline.jpg)
+![](/posts/AWS_Image_Builder_101/img/Pipeline.jpg)
 
-[Full size Diagram Image](img/Pipeline.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Pipeline.jpg)
 
 
 ## Running your Pipeline
@@ -108,9 +109,9 @@ Once you have a pipeline is defined, you can execute it which has the following 
 
 This diagram uses a pipeline that creates an AMI as an example.
 
-![](img/Execution.jpg)
+![](/posts/AWS_Image_Builder_101/img/Execution.jpg)
 
-[Full size Diagram Image](img/Execution.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/Execution.jpg)
 
 
 * The Image Builder service launches an instance in your account leveraging all the settings in your pipeline and sub-resources configuration
@@ -125,9 +126,9 @@ Pipelines can be defined using a mixture of pre-defined resources in the account
 
 Pipelines can be executed multiple times, and each produced Image is labelled with the version ID of the recipe and a timestamp allowing you to track AMI's back to the point in time version of the pipeline configuration that produced it.
 
-![](img/development_workflow.jpg)
+![](/posts/AWS_Image_Builder_101/img/development_workflow.jpg)
 
-[Full size Diagram Image](img/development_workflow.jpg)
+[Full size Diagram Image](/posts/AWS_Image_Builder_101/img/development_workflow.jpg)
 
 # Orchestration implementation
 When the Image Builder service launches the instance in your account to configure, it needs to be able to communicate with it to enable the components and recipes to be downloaded, executed and sequenced.

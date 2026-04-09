@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2021-05-05
 author: Keiran
 title: Enchilada - Orchestrating Apache Guacamole in AWS
 ---
@@ -92,9 +93,9 @@ The automated creation of connections in the Guacamole user interface leverages 
 
 From the diagram below, the core components function as follows, starting from a launch or terminate of an EC2 instance, and resulting in a suitable update of the Guacamole bastion configuration.
 
-![](img/enchilada-small.jpg)
+![](/posts/AWS_Bastion_Guacamole/img/enchilada-small.jpg)
 
-[Full size Diagram Image can be found here](img/enchilada-full.jpg)
+[Full size Diagram Image can be found here](/posts/AWS_Bastion_Guacamole/img/enchilada-full.jpg)
 
 
 ### CloudTrail (Workload Account)
@@ -111,7 +112,7 @@ published.
 
 For Enchilada, we use a CloudWatch Event Rule against the following custom Event Pattern :
 
-```
+```json
 {
 "source": ["aws.ec2"],
 "detail-type": ["AWS API Call via CloudTrail"],
@@ -142,7 +143,7 @@ published.
 
 For Enchilada in the Shared Services Account, we use another CloudWatch Event Rule against the following custom Event Pattern.
 
-```
+```json
 {
 "source": ["aws.ec2"],
 "detail-type": ["AWS API Call via CloudTrail"],

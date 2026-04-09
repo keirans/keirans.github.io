@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "From SDKs to Skills: The Evolution of Portable AI Capabilities"
-date: 2026-03-11
+date: 2026-02-27
 categories: [AI, Networking, Automation]
 tags: [AWS Strands SDK, SNMP, AI Agents, Ubiquiti, LLM]
 author: Keiran
@@ -11,7 +11,7 @@ The AI agent ecosystem is moving at a frankly insane pace. We are rapidly transi
 
 I’ve spent the last few weeks exploring this shift by building a network operations assistant for my home network. I have two **Ubiquiti PtP (Point-to-Point) devices** that provide connectivity from my house to my shed (See picture). Unlike more modern UniFi gear, these devices don't support the UniFi app for management. Instead, they expose their metrics through their own dedicated application or via SNMPv1, requiring you to bring your own tools and infrastructure you want any level of reliable observability.
 
-![](img/locoAP.png)
+![](/posts/Strands_Skills/img/locoAP.png)
 
 As a learning exercise, I used this as an opportunity to build an AI agent that could communicate to these devices. I find that I learn best by understanding the foundations of a system before relying on abstractions; diving into the low-level mechanics of an agent helps me stay proficient across the entire technology stack. 
 
@@ -63,7 +63,7 @@ While the SDK makes switching models relatively straight forward, it isn't alway
 
 ## The Arrival of the Portable Skill standard
 
-![](./img/iknowkungfu.gif)
+![](/posts/Strands_Skills/img/iknowkungfu.gif)
 
 The alternative is the "Skills" approach, which treats intelligence as a [declarative standard](https://agentskills.io/) rather than a software application. Instead of writing the *how* (the tools and the orchestration code on when to call them), you define the *what* (the capability) in a simple file called `SKILL.md`.
 
@@ -88,10 +88,10 @@ This approach offers a significantly lower barrier to entry. You aren't building
 
 In the screenshots linked below, you can see this portability in action. I executed the same SNMP link audit skill using:
 
-* **[MS Copilot](./copilot.md)** (GPT-5-Mini Model)
-* **[Amazon Kiro](./Kiro.md)** (Auto Routing to a selected Bedrock-backed model based on task)
-* **[Google Gemini](./Gemini.md)** (Gemini 3 Model)
-* **[OpenCode Agent](./OpenCode.md)** (Pickle model that is currently free)
+* **[MS Copilot](./copilot)** (GPT-5-Mini Model)
+* **[Amazon Kiro](./Kiro)** (Auto Routing to a selected Bedrock-backed model based on task)
+* **[Google Gemini](./Gemini)** (Gemini 3 Model)
+* **[OpenCode Agent](./OpenCode)** (Pickle model that is currently free)
 
 Despite having completely different backing LLMs and development teams and paradigms, each agent was able to ingest the skill, execute the bundled scripts, and provide the same high-quality technical analysis. This is the power of skills: they enable you to move quickly for many tasks while removing the need for complex model or agent specific code.
 

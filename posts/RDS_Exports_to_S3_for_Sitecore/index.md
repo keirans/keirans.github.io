@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2019-11-24
 author: Keiran
 title: RDS Database exports to S3 for Sitecore
 ---
@@ -14,7 +15,7 @@ The first step is to create an S3 Bucket for the Database backups to be placed i
 
 In this example, I also attach a 14 day lifecycle policy as I don't want to have as we don't want to have database exports sitting around in S3 longer than that, as well as enabling AES256 encryption on the server side for foundational security.
 
-```
+```yaml
   SitecoreDBBackupsBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -36,7 +37,7 @@ Next up, we create an IAM role for the RDS database that has a policy allowing t
 You will see that we explicitly define the buckets that this applies to using it's ARN. In your code you will have to put the ARN of the bucket created in the above step, either by using a Ref if it is in the same stack, or using the [Cloudformation Import/Export](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-exports.html) functionality if it resides in another stack.
 
 
-```
+```yaml
   RdsHostRole: 
     Type: "AWS::IAM::Role"
     Properties:
@@ -102,7 +103,7 @@ As you can see from the Option Group resource, you will need to update the templ
 The RDS Instance is then created accordingly for use, note the DBParameterGroupName , OptionGroupName and EnableCloudwatchLogsExports properties that are detailed above being applied accordingly.
 
 
-```
+```yaml
   AgentLogGroup:
     Type: AWS::Logs::LogGroup
     Properties: 
@@ -176,7 +177,7 @@ Once the instance is up and running, we can now invoke the stored procedures tha
 
 In the below example, I have provided some Powershell that uses Invoke-Sqlcmd to export the Sitecore_Core database to our S3 bucket as a file called Sitecore_Core-2019-11-24.bak.
 
-```
+```powershell
 PS C:\Windows\system32> $command = @'
 >> exec msdb.dbo.rds_backup_database
 >> @source_db_name='Sitecore_Core',

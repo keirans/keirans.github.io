@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Optimising Amazon Bedrock Costs in Our Agentic Tasks Platform"
+date: 2026-02-27
 author: Keiran
 ---
 
@@ -182,7 +183,7 @@ aws bedrock list-inference-profiles --type-equals SYSTEM_DEFINED |
 ```
 
 This returns the system profiles we can copy:
-```
+```json
 "inferenceProfileArn": "arn:aws:bedrock:us-east-1:0123456789:inference-profile/global.anthropic.claude-opus-4-6-v1",
 "inferenceProfileArn": "arn:aws:bedrock:us-east-1:0123456789:inference-profile/us.anthropic.claude-opus-4-6-v1"
 ```
@@ -191,15 +192,15 @@ We then create our own application inference profile based on the U.S. regional 
 
 
 ```bash
-aws bedrock create-inference-profile 
-  --inference-profile-name "cde-dev-opus46-us-main" 
-  --model-source "copyFrom=arn:aws:bedrock:us-east-1:0123456789:inference-profile/us.anthropic.claude-opus-4-6-v1" 
+aws bedrock create-inference-profile \
+  --inference-profile-name "cde-dev-opus46-us-main" \
+  --model-source "copyFrom=arn:aws:bedrock:us-east-1:0123456789:inference-profile/us.anthropic.claude-opus-4-6-v1" \
   --description "US Opus 4.6 Profile for cde-dev-opus46-us-main"
 ```
 
 Bedrock returns an ARN confirming the new profile:
 
-```
+```json
 "inferenceProfileArn": "arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/t2usn2fq5w2r",
 "status": "ACTIVE"
 ```
@@ -208,7 +209,7 @@ Next, we retrieve the full configuration to verify which model ARNs and Regions 
 
 
 ```bash
-aws bedrock get-inference-profile 
+aws bedrock get-inference-profile \
   --inference-profile-identifier arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/t2usn2fq5w2r
 ```
 
@@ -238,7 +239,7 @@ aws bedrock tag-resource \
 You can confirm that the profile now carries the correct tagging:
 
 ```bash
-aws bedrock list-tags-for-resource 
+aws bedrock list-tags-for-resource \
   --resource-arn arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/t2usn2fq5w2r
 ```
  
@@ -249,11 +250,11 @@ To verify the profile is functional, we invoke the model through the new profile
 
 
 ```bash
-aws bedrock-runtime invoke-model 
-  --model-id arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/t2usn2fq5w2r 
-  --body fileb://<(echo '{"anthropic_version":"bedrock-2023-05-31","max_tokens":100,"messages":[{"role":"user","content":"Hello, world"}]}') 
-  --content-type application/json 
-  --accept application/json 
+aws bedrock-runtime invoke-model \
+  --model-id arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/t2usn2fq5w2r \
+  --body fileb://<(echo '{"anthropic_version":"bedrock-2023-05-31","max_tokens":100,"messages":[{"role":"user","content":"Hello, world"}]}') \
+  --content-type application/json \
+  --accept application/json \
   output.json
 ```
 
@@ -270,8 +271,8 @@ In the screenshot below, you can see this in the cost calculator for this profil
 
  
 
-![costs.png](img/costs.png)
- [Open image in browser](img/costs.png)
+![costs.png](/posts/Claude_Bedrock_Tasks_Cost/img/costs.png)
+ [Open image in browser](/posts/Claude_Bedrock_Tasks_Cost/img/costs.png)
 
  
 
@@ -295,8 +296,8 @@ In the screenshot below, you can see the metrics available for this profile; the
 
  
 
-![cloudwatch.png](img/cloudwatch.png)
-[Open image in browser](img/cloudwatch.png)
+![cloudwatch.png](/posts/Claude_Bedrock_Tasks_Cost/img/cloudwatch.png)
+[Open image in browser](/posts/Claude_Bedrock_Tasks_Cost/img/cloudwatch.png)
  
 
  
@@ -317,7 +318,7 @@ Here is a sample below
 
  
 
-```
+```bash
 # Profile-qualified model identifiers (from your screenshot)
 
 export ANTHROPIC_DEFAULT_SONNET_MODEL='arn:aws:bedrock:us-east-1:0123456789:application-inference-profile/5ujjct8xghjq'
@@ -329,8 +330,8 @@ And from within Claude, you can see that these models are now configured using t
 
  
 
-![claude-cli.png](img/claude-cli.png)
-[Open image in browser](img/claude-cli.png)
+![claude-cli.png](/posts/Claude_Bedrock_Tasks_Cost/img/claude-cli.png)
+[Open image in browser](/posts/Claude_Bedrock_Tasks_Cost/img/claude-cli.png)
  
 
  

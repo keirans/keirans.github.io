@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2020-08-27
 author: Keiran
 title: Branch Based deployment patterns on AWS
 ---
@@ -34,7 +35,7 @@ In the Image below, we demonstrate a set of simple steps in which:
 
 When changes need to be made to the cloud resources, the code can be commited to the repository in which the Jenkins job will then trigger a CloudFormation stack update to update and your resources.
 
-![](img/Basic-CFN-Pipeline.jpg)
+![](/posts/Branch_Based_Builds_in_AWS/img/Basic-CFN-Pipeline.jpg)
 
 
 # Challenges and the transition to "Immutable infrastructure"
@@ -64,7 +65,7 @@ To make things even better, when the branch is deleted, you could also look to i
 The image below visualises this workflow, each branch of the application repository has deployed different variations of cloud resources based on the Cloudformation Template contained within it.
 
 
-![](img/Branch-To-Build-Mapping.JPG)
+![](/posts/Branch_Based_Builds_in_AWS/img/Branch-To-Build-Mapping.JPG)
 
 
 So what do we need to do first to acheive this pattern ?
@@ -249,7 +250,7 @@ A sample [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/) is
 3. Once completed, the job will pause waiting for user confirmation to delete the stack when you have finished with it.
 
 
-  ```Groovy
+  ```groovy
   pipeline {
       agent any
 

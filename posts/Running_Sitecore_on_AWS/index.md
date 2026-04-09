@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2019-11-07
 author: Keiran
 title: Running Sitecore on AWS
 ---
@@ -32,7 +33,7 @@ The below Packer configuration will be enough to get you running. Add your netwo
 
 I built on Windows 2016 Core and once the AMIs were ready, deployed them using Cloudformation with the associated Load Balancers and other resources.
 
-```
+```json
 {
   "builders": [
     {
@@ -84,7 +85,7 @@ Within the provisioning script (sitecore-bootstrap.ps1) executed by Packer I tak
 
 Some of the sample Powershell code is below for your reference;
 
-```
+```powershell
 Write-Host "Extracting the Sitecore XP1 Configuration"
 Write-Host "====================================================================="
 Expand-Archive "XP1 Configuration files 9.1.1 rev. 002459.zip" -DestinationPath Config
@@ -116,7 +117,7 @@ When installing Sitecore using SIF it creates a large number of additional datab
 
 A number of these SQL statements are not compatible with RDS as they execute statements like the following;
 
-```
+```sql
 sp_configure 'contained database authentication', 1;
 GO
 RECONFIGURE;
@@ -137,7 +138,7 @@ Once this is in place, Sitecore will install accordingly.
 
 Please note that the initial RDS Database should be configured as a Single AZ initially for install, more on this next.
 
-```
+```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 
 Description: Sitecore RDS Instance stack
@@ -185,7 +186,7 @@ Resources:
 
 When building our production environment we deployed our RDS Instance with Multi-AZ True as we wanted to ensure that we had high availiability in the event of an instance of AZ failure, however when we ran the Sitecore installer, we got the following error.
 
-```
+```text
 Error SQL72014: .Net SqlClient Data Provider: Msg 5069, Level 16, State 1, Line 5 ALTER DATABASE statement failed.
 Error SQL72045: Script execution error.  The executed script:
 IF EXISTS (SELECT 1
@@ -226,7 +227,7 @@ Speaking to AWS Support, they provided me with some SQL Code that I wrapped in P
 This provides visibility of the mirroring state on the RDS Instance for each database present, as you can see there are a number of Databases and they are all in good condition mirroring wise.
 
 
-```
+```powershell
 
 $command = @'
 SELECT
@@ -380,7 +381,7 @@ The last thing I looked into was offloading the Session state to Elasticache, Re
 
 Once you get your endpoint details, you can update your Sitecore configuration with them accordingly.
 
-```
+```yaml
 AWSTemplateFormatVersion: '2010-09-09'
 
 Description: Sitecore Multi-AZ Redis Cache for Session management

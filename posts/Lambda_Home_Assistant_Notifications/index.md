@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2020-07-29
 author: Keiran
 title: Using AWS Lambda for Home Assistant notifications and automations
 ---
@@ -50,7 +51,7 @@ In this example, I'll walk through the process of defining a lambda as a notific
 
 1.  In your Home Assistant Configuration file (configuration.yaml), add the following block of code and restart your Home Assistant Install
 
-    ```
+    ```yaml
     aws:
       notify:
         - service: lambda
@@ -73,16 +74,16 @@ In this example, I'll walk through the process of defining a lambda as a notific
 
     In YAML format, this looks below: 
 
-    ```
+    ```yaml
     ---
     title: Hello from Home Assistant - This is the title
-    message: Hello from Home Assistant - This is the message 
+    message: Hello from Home Assistant - This is the message
     target: arn:aws:lambda:ap-southeast-2:1234567890:function:hass_lambda_integration
     ```
     
     And the Lambda function receives this as the following event (as logged to cloudwatch logs from my sample function)
 
-    ```
+    ```text
     [INFO]	2020-07-29T10:45:18.169Z	d23aac70-39a4-4256-84ed-25a187b93da8	The event was : 
     {
         "message": "Hello from Home Assistant - This is the message",
@@ -95,10 +96,10 @@ In this example, I'll walk through the process of defining a lambda as a notific
 
     If you would like to pass more data to the function, you can pass an optional data block of key value pairs from templates and other logic inside your Home Assistant install as per the below example.
 
-    ```
+    ```yaml
     ---
     title: Hello from Home Assistant - This is the title
-    message: Hello from Home Assistant - This is the message 
+    message: Hello from Home Assistant - This is the message
     target: arn:aws:lambda:ap-southeast-2:1234567890:function:hass_lambda_integration
     data:
       key1: value1
@@ -108,7 +109,7 @@ In this example, I'll walk through the process of defining a lambda as a notific
 
     As per the above, my example Lambda will log the following, showing you the format of the data you have access to.
 
-    ```
+    ```text
     [INFO]	2020-07-29T10:48:34.788Z	78ead725-440c-4002-b165-8991965c3ce3	The event was : 
     {
         "message": "Hello from Home Assistant - This is the message",

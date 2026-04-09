@@ -1,7 +1,8 @@
 ---
 layout: post
+date: 2020-08-03
 author: Keiran
-title: Scaling Standard Operating Environments in AWS 
+title: Scaling Standard Operating Environments in AWS
 ---
 
 # Introduction to SOEs
@@ -239,7 +240,7 @@ For example, the following ServerSpec test ensures that the AWS CLI is installed
 When the test is run using ServerSpec, a successful test will result in a zero exit code, and a failure will return non-zero.
 
 
-```
+```ruby
   describe file('/usr/bin/aws') do
       it { should exist }
       it { should be_file }

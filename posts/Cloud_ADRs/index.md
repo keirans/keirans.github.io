@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2021-04-16
 author: Keiran
 title: Democratising Cloud development standards with Architecture Decision Records (ADRs)
 ---
