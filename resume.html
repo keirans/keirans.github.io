@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keiran — Cloud & AI Infrastructure Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:       #0f172a;
+            --bg2:      #1e293b;
+            --bg3:      #0d1527;
+            --accent:   #38bdf8;
+            --accent2:  #0ea5e9;
+            --glow:     rgba(56,189,248,0.12);
+            --txt:      #f1f5f9;
+            --txt2:     #94a3b8;
+            --txt3:     #64748b;
+            --border:   #1e293b;
+            --border2:  #334155;
+            --green:    #10b981;
+            --purple:   #a78bfa;
+            --orange:   #fb923c;
+            --slate:    #64748b;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(15,23,42,0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border2);
+            padding: 0 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 58px;
+        }
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500; font-size: 0.95rem;
+            color: var(--accent); letter-spacing: 0.04em;
+        }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            color: var(--txt3); text-decoration: none;
+            font-size: 0.825rem; font-weight: 500;
+            transition: color 0.18s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--txt); }
+        .nav-links a.external { color: var(--accent); }
+        .nav-links a.external:hover { color: var(--txt); }
+
+        /* LAYOUT */
+        .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 5.5rem 0; }
+        hr.divider { border: none; border-top: 1px solid var(--border2); }
+
+        .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 0.14em;
+            margin-bottom: 0.4rem;
+        }
+        h2.section-title {
+            font-size: 1.7rem; font-weight: 700;
+            letter-spacing: -0.025em; margin-bottom: 2.5rem;
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding-top: 58px;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--glow); border: 1px solid rgba(56,189,248,0.28);
+            color: var(--accent); font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem; padding: 0.3rem 0.8rem;
+            border-radius: 100px; margin-bottom: 1.75rem; margin-top: 1.5rem; width: fit-content;
+        }
+        .hero-badge::before {
+            content: ''; width: 6px; height: 6px;
+            background: var(--accent); border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        h1.hero-name {
+            font-size: clamp(2.6rem, 6vw, 4.2rem);
+            font-weight: 700; letter-spacing: -0.04em;
+            line-height: 1.08; margin-bottom: 0.85rem;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem; color: var(--txt2); margin-bottom: 1.75rem;
+        }
+        .hero-subtitle span { color: var(--accent); }
+        .hero-bio {
+            max-width: 580px; color: var(--txt2);
+            line-height: 1.75; margin-bottom: 2rem; font-size: 0.94rem;
+        }
+        .stats {
+            display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 2.25rem;
+        }
+        .stat {
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 10px; padding: 0.75rem 1.2rem; text-align: center;
+        }
+        .stat .v {
+            display: block; font-family: 'JetBrains Mono', monospace;
+            font-size: 1.45rem; font-weight: 500;
+            color: var(--accent); letter-spacing: -0.02em;
+        }
+        .stat .l {
+            display: block; font-size: 0.7rem; color: var(--txt3);
+            text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.1rem;
+        }
+        .actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+        .btn {
+            padding: 0.7rem 1.4rem; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 600;
+            text-decoration: none; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            transition: all 0.18s;
+        }
+        .btn-p { background: var(--accent); color: #0f172a; }
+        .btn-p:hover { background: var(--accent2); transform: translateY(-1px); }
+        .btn-s {
+            background: transparent; color: var(--txt2);
+            border: 1px solid var(--border2);
+        }
+        .btn-s:hover { color: var(--txt); border-color: var(--txt3); transform: translateY(-1px); }
+
+        /* TIMELINE */
+        .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.75rem; }
+        .flt {
+            padding: 0.35rem 0.9rem; border-radius: 100px;
+            font-size: 0.78rem; font-weight: 500;
+            border: 1px solid var(--border2);
+            background: transparent; color: var(--txt3);
+            cursor: pointer; transition: all 0.16s;
+        }
+        .flt:hover { color: var(--txt); border-color: var(--txt3); }
+        .flt.on { background: var(--glow); border-color: var(--accent); color: var(--accent); }
+
+        .tl { position: relative; padding-left: 1.75rem; }
+        .tl::before {
+            content: ''; position: absolute;
+            left: 0; top: 10px; bottom: 0; width: 1px;
+            background: linear-gradient(to bottom, var(--accent) 0%, rgba(56,189,248,0.08) 100%);
+        }
+
+        .tl-item { position: relative; padding-bottom: 2rem; }
+        .tl-item.hide { display: none; }
+
+        .dot {
+            position: absolute; left: -2.2rem; top: 7px;
+            width: 13px; height: 13px; border-radius: 50%;
+            background: var(--bg); border: 2px solid var(--accent);
+            transition: all 0.2s;
+        }
+        .tl-item[data-era~="devops"] .dot { border-color: var(--orange); }
+        .tl-item[data-era~="unix"]   .dot { border-color: var(--purple); }
+        .tl-item[data-era~="legacy"] .dot { border-color: var(--slate); }
+        .tl-item[data-era~="ai"]:not([data-era~="cloud"]) .dot { border-color: var(--green); }
+
+        .tl-item.open .dot,
+        .tl-item:hover .dot { background: currentColor; }
+        .tl-item[data-era~="cloud"].open .dot,
+        .tl-item[data-era~="cloud"]:hover .dot { background: var(--accent); box-shadow: 0 0 10px rgba(56,189,248,0.5); }
+        .tl-item[data-era~="devops"].open .dot,
+        .tl-item[data-era~="devops"]:hover .dot { background: var(--orange); box-shadow: 0 0 10px rgba(251,146,60,0.5); }
+        .tl-item[data-era~="unix"].open .dot,
+        .tl-item[data-era~="unix"]:hover .dot { background: var(--purple); box-shadow: 0 0 10px rgba(167,139,250,0.5); }
+        .tl-item[data-era~="legacy"].open .dot,
+        .tl-item[data-era~="legacy"]:hover .dot { background: var(--slate); }
+        .tl-item[data-era~="ai"]:not([data-era~="cloud"]).open .dot,
+        .tl-item[data-era~="ai"]:not([data-era~="cloud"]):hover .dot { background: var(--green); box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+
+        .tl-hd {
+            cursor: pointer; display: flex; align-items: baseline;
+            gap: 0.85rem; padding: 0.4rem 0; user-select: none;
+            flex-wrap: wrap;
+        }
+        .tl-year {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem; color: var(--txt3); min-width: 36px;
+        }
+        .tl-co { font-weight: 600; font-size: 0.97rem; }
+        .tl-role { color: var(--txt2); font-size: 0.85rem; }
+        .tl-loc { margin-left: auto; font-size: 0.72rem; color: var(--txt3); font-family: 'JetBrains Mono', monospace; }
+        .tl-arr { color: var(--txt3); font-size: 0.65rem; transition: transform 0.22s; }
+        .tl-item.open .tl-arr { transform: rotate(180deg); }
+
+        .tl-body {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1);
+        }
+        .tl-item.open .tl-body { max-height: 12000px; }
+
+        .card {
+            margin: 0.7rem 0 1.75rem;
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 12px; padding: 1.4rem;
+        }
+        .card-hd {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding-bottom: 1rem; margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-co { font-weight: 600; font-size: 0.97rem; }
+        .card-when { font-size: 0.78rem; color: var(--txt3); margin-top: 0.2rem; }
+        .dur {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+            color: var(--txt3); background: var(--bg3);
+            padding: 0.2rem 0.55rem; border-radius: 4px; white-space: nowrap;
+        }
+
+        .role-overview {
+            font-size: 0.865rem; color: var(--txt2);
+            line-height: 1.7; margin: 0.6rem 0 1rem;
+        }
+
+        .clabel {
+            font-size: 0.68rem; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--txt3);
+            margin: 1rem 0 0.5rem;
+        }
+
+        /* nested roles inside Sourced/Amdocs */
+        .nested { border-left: 1px solid var(--border2); margin-left: 0.5rem; padding-left: 1.25rem; }
+        .nrole { margin-bottom: 1.75rem; }
+        .nrole:last-child { margin-bottom: 0; }
+        .nrole-title { font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+        .nrole-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; color: var(--txt3); margin-bottom: 0.6rem; }
+        .nrole-title[data-era="devops"] { color: var(--orange); }
+        .nrole-title[data-era="unix"]   { color: var(--purple); }
+        .nrole-title[data-era="legacy"] { color: var(--slate); }
+
+        ul.resp { list-style: none; margin-bottom: 0.5rem; }
+        ul.resp li {
+            font-size: 0.855rem; color: var(--txt2); line-height: 1.6;
+            padding: 0.18rem 0 0.18rem 1rem; position: relative;
+        }
+        ul.resp li::before { content: '—'; position: absolute; left: 0; color: var(--txt3); }
+
+        .achs { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 0.75rem; }
+        .ach {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 6px; padding: 0.7rem 0.9rem;
+        }
+        .ach-t { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.2rem; }
+        .ach-d { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; }
+
+        .pcards { display: flex; flex-direction: column; gap: 0.6rem; }
+        .pc {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 6px; padding: 0.7rem 0.9rem;
+        }
+        .pc-cl { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .pc-d { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.85rem; }
+        .tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+            padding: 0.18rem 0.5rem; border-radius: 4px;
+            background: var(--glow); color: var(--accent);
+            border: 1px solid rgba(56,189,248,0.18);
+        }
+        .tag.d { background: rgba(251,146,60,0.1); color: var(--orange); border-color: rgba(251,146,60,0.2); }
+        .tag.u { background: rgba(167,139,250,0.1); color: var(--purple); border-color: rgba(167,139,250,0.2); }
+        .tag.l { background: rgba(100,116,139,0.12); color: var(--slate); border-color: rgba(100,116,139,0.2); }
+
+        /* SKILLS */
+        .skills-grid { display: flex; flex-direction: column; gap: 1rem; }
+        .sk-cat {
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 12px; padding: 1.1rem 1.35rem;
+        }
+        .sk-cat-title {
+            font-size: 0.78rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--txt2); margin-bottom: 0.65rem;
+            display: flex; align-items: center; gap: 0.45rem;
+        }
+        .sk-cat-title::before {
+            content: ''; width: 7px; height: 7px;
+            border-radius: 50%; background: var(--accent); flex-shrink: 0;
+        }
+        .sk-cat-title.d::before { background: var(--orange); }
+        .sk-cat-title.u::before { background: var(--purple); }
+        .sk-cat-title.l::before { background: var(--slate); }
+        .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+        .chip {
+            padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.8rem;
+            background: var(--bg3); border: 1px solid var(--border2);
+            color: var(--txt2); transition: all 0.15s; cursor: default;
+        }
+        .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* HIGHLIGHTS GRID */
+        .hl-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        .hl-card {
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 12px; padding: 1.4rem;
+            transition: all 0.2s;
+        }
+        .hl-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .hl-icon { font-size: 1.4rem; margin-bottom: 0.65rem; }
+        .hl-title { font-weight: 600; font-size: 0.93rem; margin-bottom: 0.45rem; }
+        .hl-desc { font-size: 0.8rem; color: var(--txt2); line-height: 1.55; }
+        .hl-badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem; color: var(--txt3); margin-top: 0.75rem;
+        }
+
+        /* INDUSTRIES */
+        .ind-wrap { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 2rem; }
+        .ind {
+            display: flex; align-items: center; gap: 0.45rem;
+            padding: 0.55rem 1.1rem; border-radius: 100px;
+            background: var(--bg2); border: 1px solid var(--border2);
+            font-size: 0.85rem; color: var(--txt2);
+        }
+        .ind .dot2 { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+        .trail-card {
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 12px; padding: 1.35rem;
+        }
+        .trail-lbl { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--txt3); margin-bottom: 0.85rem; }
+        .trail { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .city { font-size: 0.875rem; color: var(--txt2); }
+        .city.now { color: var(--accent); font-weight: 600; }
+        .arr { color: var(--txt3); font-size: 0.75rem; }
+
+        /* CERTS */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .cert {
+            background: var(--bg2); border: 1px solid var(--border2);
+            border-radius: 12px; padding: 1.15rem;
+        }
+        .cert.ok { border-color: rgba(16,185,129,0.35); }
+        .cert.exp { opacity: 0.55; }
+        .cert-status {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.07em; padding: 0.18rem 0.55rem;
+            border-radius: 4px; margin-bottom: 0.6rem;
+        }
+        .cert-status.ok { background: rgba(16,185,129,0.14); color: var(--green); }
+        .cert-status.exp { background: rgba(100,116,139,0.14); color: var(--txt3); }
+        .cert-iss { font-size: 0.69rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--txt3); }
+        .cert-name { font-weight: 600; font-size: 0.88rem; margin: 0.2rem 0 0.35rem; line-height: 1.35; }
+        .cert-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--txt3); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border2);
+            padding: 2rem; text-align: center;
+            color: var(--txt3); font-size: 0.8rem;
+        }
+        footer a { color: var(--txt3); text-decoration: none; }
+        footer a:hover { color: var(--accent); }
+
+        /* PRINT */
+        @media print {
+            nav, .filter-row, .actions { display: none !important; }
+            body { background: #fff; color: #000; font-size: 12px; }
+            .tl-body { max-height: none !important; overflow: visible !important; }
+            .card { border: 1px solid #ddd; background: #f9f9f9; }
+            section { padding: 1.5rem 0; }
+            .hl-card, .cert, .sk-cat { border: 1px solid #ddd; background: #f9f9f9; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 620px) {
+            nav { padding: 0 1rem; }
+            .nav-links { display: none; }
+            .container { padding: 0 1rem; }
+            h1.hero-name { font-size: 2.2rem; }
+            .tl-loc { display: none; }
+            .hl-grid { grid-template-columns: 1fr; }
+            .certs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">Keiran Sweet //</div>
+    <ul class="nav-links">
+        <li><a href="#hero">About</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#certs">Certs</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="https://www.linkedin.com/in/keiransweet/" target="_blank" rel="noopener" class="external">LinkedIn ↗</a></li>
+        <li><a href="https://notes.keiran.io/" target="_blank" rel="noopener" class="external">Blog ↗</a></li>
+    </ul>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="container">
+<section id="hero">
+    <div class="hero-badge">Available for senior engagements</div>
+    <h1 class="hero-name">Keiran Sweet</h1>
+    <p class="hero-subtitle"><span>Cloud & AI Platform Engineer</span></p>
+    <p class="hero-bio">
+        Cloud and AI Platform Engineer with over 20 years of experience spanning the full arc
+        from physical Unix data centres to modern multi-cloud and AI-native platform environments.
+        My focus and passion lies in building platforms that help developers, engineers, and
+        technologists move fast with new technologies to rapidly deliver business value.
+    </p>
+    <p class="hero-bio">
+        One of the first 10 employees at Sourced Group, I joined at inception and grew with the
+        company through its expansion across Australia, Canada, and globally before its acquisition
+        by Amdocs in 2021 — building teams, delivering at scale, and shaping how cloud infrastructure
+        is designed and operated across Finance, Telco, Aviation, and Healthcare. Working across
+        many companies and within Sourced, I have been fortunate to engage across a variety of
+        verticals, giving me experience in a broad set of technologies, infrastructure, tools,
+        and team structures.
+    </p>
+    <p class="hero-bio">
+        I enjoy working in teams where I can share my knowledge and help team members grow their
+        capabilities — whether through mentoring sessions, supporting podcasts, or presenting at
+        conferences. I am based in the Southwest of Western Australia and work predominantly
+        in a remote capacity.
+    </p>
+    <div class="actions">
+        <a href="#timeline" class="btn btn-p">View Timeline ↓</a>
+        <a href="#" class="btn btn-s" onclick="window.print();return false;">Print / PDF</a>
+    </div>
+</section>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════ TIMELINE ═══════════════ -->
+<div class="container">
+<section id="timeline">
+    <p class="label">// career history</p>
+    <h2 class="section-title">Career Timeline</h2>
+
+    <div class="filter-row">
+        <button class="flt on" data-f="all">All Eras</button>
+        <button class="flt" data-f="ai">🤖 AI</button>
+        <button class="flt" data-f="cloud">☁ Cloud</button>
+        <button class="flt" data-f="devops">⚙ DevOps</button>
+        <button class="flt" data-f="unix">🐧 Linux / Unix</button>
+        <button class="flt" data-f="legacy">🖥 Traditional Infrastructure</button>
+    </div>
+
+    <div class="tl">
+
+        <!-- ── SOURCED & AMDOCS ── -->
+        <div class="tl-item" data-era="cloud ai">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2014</span>
+                <span class="tl-co">Sourced Group · Amdocs</span>
+                <span class="tl-role">Multiple roles · 12 years</span>
+                <span class="tl-loc">Global</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Sourced Group an Amdocs Company</div>
+                            <div class="card-when">Cloud Consulting · February 2014 – Present</div>
+                        </div>
+                        <span class="dur">12 yrs 3 mo</span>
+                    </div>
+
+                    <div class="nested">
+
+                        <!-- Global SL Lead -->
+                        <div class="nrole">
+                            <div class="nrole-title">Global Service Line Lead, Cloud Platforms</div>
+                            <div class="nrole-meta">Sep 2024 – Present · Amdocs Cloud Studio · Global</div>
+                            <p class="role-overview">A principal engineering and leadership role defining and delivering the Cloud Platforms service line within Amdocs Cloud Studio. The role combines product strategy, go-to-market leadership, and hyperscaler partnerships with active technical involvement — building solution prototypes, proving architectures through working deployments, and taking direct engineering ownership through to implementation when engagements are won.</p>
+                            <p class="clabel">Responsibilities</p>
+                            <ul class="resp">
+                                <li>Lead strategy, design, and market delivery of platform-aligned solutions for global enterprise customers</li>
+                                <li>Maintain technical depth across the solutions stack — building prototypes, running demonstrations, and validating architectures through working deployments prior to customer commitment</li>
+                                <li>Direct post-merger technical migration and consolidation of engineering capabilities across Sourced, DevOpsGroup, and Kenzan</li>
+                                <li>Lead enterprise-scale pre-sales, authoring technical RFP responses and taking engineering ownership through to delivery when engagements are won</li>
+                                <li>Forge and manage strategic hyperscaler partner relationships (AWS, GCP, Azure) aligned to marketplace initiatives</li>
+                                <li>Develop partnerships with strategic technology vendors such as Coder.com, securing roadmap visibility, licence resell arrangements, and broader commercial benefits for the practice and its customers</li>
+                            </ul>
+                            <p class="clabel">Key Achievements</p>
+                            <div class="achs">
+                                <div class="ach">
+                                    <div class="ach-t">Amdocs Agentic Tasks Platform</div>
+                                    <div class="ach-d">Led production-grade implementation of the Coder.com reference architecture for secure AI agent deployment within regulated cloud environments, disconnecting heavy computational tasks from local workstations while maintaining rigorous security and policy boundaries.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Amdocs Kenan on Cloud</div>
+                                    <div class="ach-d">Re-architected the industry-leading Kenan billing platform into a cloud-native infrastructure package with Oracle → PostgreSQL migration tooling, significantly reducing TCO and enhancing operational agility for global Telco clients.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Google GCVE Migration Accelerator</div>
+                                    <div class="ach-d">Engineered a "drop-in" migration solution for Google Cloud VMware Engine with automated Terraform foundations supporting legacy VMware estate exits and broader multi-cloud strategies.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Acquisition Integration & Capability Consolidation</div>
+                                    <div class="ach-d">Directed 12-month initiative to migrate and consolidate Sourced, DevOpsGroup, and Kenzan into the strategic Amdocs toolchain — sunsetting Bitbucket → GitHub, Okta → EntraID, and unifying multi-cloud environments.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">AWS</span>
+                                <span class="tag">Kiro</span>
+                                <span class="tag">Claude</span>
+                                <span class="tag">MS Copilot</span>
+                                <span class="tag">Gemini</span>
+                                <span class="tag">Coder.com</span>
+                                <span class="tag">GitHub</span>
+                                <span class="tag">Terraform</span>
+                                <span class="tag">Kubernetes</span>
+                                <span class="tag">ArgoCD</span>
+                                <span class="tag">Atlassian</span>
+                                <span class="tag">Cloud Product Strategy</span>
+                                <span class="tag">Principal Engineer</span>
+                                <span class="tag">Post-Merger Integration</span>
+                                <span class="tag">EntraID</span>
+                                <span class="tag">Agentic Workflows</span>
+                                <span class="tag">GCVE</span>
+                                <span class="tag">RFP Strategy</span>
+                                <span class="tag">Hyperscaler Marketplace</span>
+                                <span class="tag">OpenSpec</span>
+                            </div>
+                        </div>
+
+                        <!-- Principal Solutions Consultant -->
+                        <div class="nrole">
+                            <div class="nrole-title">Principal Solutions Consultant</div>
+                            <div class="nrole-meta">Nov 2022 – Dec 2024 · Global</div>
+                            <p class="role-overview">A technical pre-sales and solution architecture role owning the full sales lifecycle for the ANZ Professional Services division. Beyond architecture and documentation, the function involved building working prototypes, running live demonstrations, and proving solutions in real environments — with direct involvement continuing through implementation when engagements were won.</p>
+                            <p class="clabel">Responsibilities</p>
+                            <ul class="resp">
+                                <li>Owned end-to-end pre-sales lifecycle including technical discovery, architecture design, resource estimation, and SOW definition for complex cloud transformations</li>
+                                <li>Built proof-of-concept environments and ran live technical demonstrations to validate proposed architectures with enterprise customers prior to commitment</li>
+                                <li>Remained involved through implementation when engagements were won, ensuring continuity between proposed solution and delivered outcome</li>
+                                <li>Authored technical responses for Group-wide RFPs, providing expert-level validation to strategic customers and hyperscaler partners</li>
+                            </ul>
+                            <p class="clabel">Key Achievements</p>
+                            <div class="achs">
+                                <div class="ach">
+                                    <div class="ach-t">Tier-1 Telco BCC Migration</div>
+                                    <div class="ach-d">Architected a multi-million dollar upgrade and cloud migration strategy for Amdocs BCC products for a major Australian telecommunications provider — spanning hundreds of virtual machines, databases, and cloud-native resources across a complex, business-critical environment.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Kenan Cloud-Native Transformation</div>
+                                    <div class="ach-d">Led technical solutioning for migrating Kenan — Amdocs' flagship billing platform, critical to revenue operations for Telco and other industry customers globally — from legacy on-premises to a cloud-native architecture leveraging EKS, PaaS services, and Terraform.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Pre-Sales Engine Optimization</div>
+                                    <div class="ach-d">Established reusable solution pattern libraries and standardised SOW templates, reducing turnaround time for complex estimates. Developed AI skills and tooling to automate large portions of the consulting deliverables cycle — compressing asset creation, proposals, and supporting materials from weeks down to hours.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">Solution Architecture</span>
+                                <span class="tag">Pre-Sales Leadership</span>
+                                <span class="tag">AWS</span>
+                                <span class="tag">Kubernetes / EKS</span>
+                                <span class="tag">Terraform</span>
+                                <span class="tag">CloudFormation</span>
+                                <span class="tag">Ansible</span>
+                                <span class="tag">GOSS</span>
+                                <span class="tag">Image Builder</span>
+                                <span class="tag">Control Tower</span>
+                                <span class="tag">Telco Cloud</span>
+                            </div>
+                        </div>
+
+                        <!-- Managing Principal -->
+                        <div class="nrole">
+                            <div class="nrole-title">Managing Principal</div>
+                            <div class="nrole-meta">Jul 2019 – Dec 2022 · APAC / Global</div>
+                            <p class="role-overview">A dual-capacity leadership role combining people management, business operations, and active delivery as a Principal Consultant. The function was accountable for the health, growth, and output quality of multiple delivery squads across APAC and globally — while contributing to the strategic direction of the Sourced practice during the transition into Amdocs post-acquisition.</p>
+                            <p class="clabel">Responsibilities</p>
+                            <ul class="resp">
+                                <li>Directed the "Squad of Squads" model — managing multiple Squad Leads, 25+ consultants globally</li>
+                                <li>Standardised the company-wide hiring and interview framework — both technical and consulting assessment — and trained the global team on how to conduct interviews effectively, enabling the business to scale hiring without bottlenecking on senior staff; the team grew to over 400 consultants globally by the time of the Amdocs acquisition</li>
+                                <li>Served as one of the first AWS Ambassadors, bridging technical implementation and strategic partnerships</li>
+                            </ul>
+                            <p class="clabel">Key Achievements</p>
+                            <div class="achs">
+                                <div class="ach">
+                                    <div class="ach-t">"Outputs" Knowledge Repatriation Initiative</div>
+                                    <div class="ach-d">Built centralised framework for cataloging technical (IaC, patterns, code) and non-technical (case studies) artifacts to improve global delivery efficiency and upskill the broader team — systematically capturing expertise to grow individual capabilities and scale the business without relying on a narrow pool of senior staff.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Regional Business Expansion</div>
+                                    <div class="ach-d">Led bootstrap expansion into Toronto, Melbourne, and New Zealand while simultaneously delivering core client projects.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">Strategic Leadership</span>
+                                <span class="tag">AWS Ambassador</span>
+                                <span class="tag">Squad of Squads</span>
+                                <span class="tag">Talent Strategy</span>
+                                <span class="tag">Global Expansion</span>
+                            </div>
+                        </div>
+
+                        <!-- Principal Consultant: SBS / Kiwibank / ANZ -->
+                        <div class="nrole">
+                            <div class="nrole-title">Principal Consultant</div>
+                            <div class="nrole-meta">Jan 2020 – Nov 2022 · Sydney / New Zealand (Remote)</div>
+                            <p class="role-overview">A senior hands-on delivery role embedded within enterprise client environments, responsible for the architecture and engineering of AWS-based cloud platform solutions. The function provided direct technical ownership across infrastructure design, IaC, security controls, and platform strategy — working alongside client engineering teams to build production-grade cloud foundations at scale.</p>
+                            <p class="clabel">Projects</p>
+                            <div class="pcards">
+                                <div class="pc">
+                                    <div class="pc-cl">SBS — Sydney</div>
+                                    <div class="pc-d">Implemented automated FAST Channel solution using AWS Elemental and Akamai CDN. Cloud platform uplift and Direct Connect enhancements for the 2022 FIFA World Cup.</div>
+                                </div>
+                                <div class="pc">
+                                    <div class="pc-cl">Kiwibank — New Zealand</div>
+                                    <div class="pc-d">Developed multi-cloud strategy (AWS + Azure) using "Platform as a Product" methodology, defining the engineering backlog to align environments with target state.</div>
+                                </div>
+                                <div class="pc">
+                                    <div class="pc-cl">ANZ Bank — Australia & New Zealand</div>
+                                    <div class="pc-d">One of the core engineering leads for the BS11 Compliant AWS Cloud Platform. Standardised Terraform and CI/CD automation increasing efficiency for 30+ globally distributed developers.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Principal Consultant: Cochlear / ABC -->
+                        <div class="nrole">
+                            <div class="nrole-title">Principal Consultant</div>
+                            <div class="nrole-meta">Jul 2019 – Jan 2020 · Sydney</div>
+                            <p class="role-overview">A senior delivery role responsible for designing and building cloud-native infrastructure on AWS for enterprise clients across healthcare and media. The function covered end-to-end ownership of platform architecture, network topology, IAM, security controls, CI/CD pipelines, and operational readiness from initial design through to production handover.</p>
+                            <p class="clabel">Projects</p>
+                            <div class="pcards">
+                                <div class="pc">
+                                    <div class="pc-cl">Cochlear — Sydney</div>
+                                    <div class="pc-d">Led design and build of AWS infrastructure for Cochlear.com (Sitecore CMS on Windows/SQL Server). Delivered secure, automated global web presence platform.</div>
+                                </div>
+                                <div class="pc">
+                                    <div class="pc-cl">ABC (Australian Broadcasting Corporation)</div>
+                                    <div class="pc-d">Delivered streaming audio solution for legacy players and smart speakers. Supported JJJ Hottest 100 on AWS. Authored the public post "Music to My Ears — A Modern Cloud Architecture for Legacy Audio Streams."</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Senior Consultant: Qantas -->
+                        <div class="nrole">
+                            <div class="nrole-title">Senior Consultant</div>
+                            <div class="nrole-meta">Oct 2016 – Jul 2019 · Sydney</div>
+                            <p class="role-overview">A senior technical delivery role embedded within the Qantas engineering organisation, responsible for building and evolving the AWS cloud platform that hosted critical airline systems. The function spanned platform engineering, configuration management, cloud security, observability, and source code security — working alongside Qantas engineers to modernize the foundational infrastructure underpinning the airline's digital operations.</p>
+                            <p class="clabel">Project: Qantas Airways</p>
+                            <div class="achs">
+                                <div class="ach">
+                                    <div class="ach-t">Cloud Security Platform</div>
+                                    <div class="ach-d">Core member of the Cloud Security project responsible for the introduction and adoption of platform security features across the estate: SELinux configuration, Secrets Management, Enhanced Logging and Audit, Intrusion Detection, SIEM integration, and automated SOE Security scanning.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">IaaS Configuration Management & Self-Service Patching</div>
+                                    <div class="ach-d">Introduced IaaS functionality using Puppet Enterprise on AWS OpsWorks CM for automated VM configuration management, complemented by self-service patching capabilities via AWS Systems Manager.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Atlassian Bamboo Automation</div>
+                                    <div class="ach-d">Migrated Atlassian Bamboo to a fully automated and resilient solution using Auto Scaling and RDS, eliminating single points of failure in the CI pipeline.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Flight Planning Performance</div>
+                                    <div class="ach-d">Introduced Nitro-based instance types, delivering measurable performance gains to the flight planning system. Migrated observability from Stackdriver to Datadog across the platform.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">Bitbucket Secrets Detection</div>
+                                    <div class="ach-d">Implemented a Bitbucket Secrets detection solution to prevent accidental credential exposure in source code across the Qantas engineering organisation.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">AWS</span><span class="tag">Puppet Enterprise</span>
+                                <span class="tag">AWS OpsWorks CM</span><span class="tag">AWS Systems Manager</span>
+                                <span class="tag">Datadog</span><span class="tag">Atlassian / Bamboo</span>
+                                <span class="tag">SELinux</span><span class="tag">SIEM</span>
+                                <span class="tag">Secrets Management</span><span class="tag">Nitro Instances</span>
+                            </div>
+                        </div>
+
+                        <!-- Senior Consultant: Scotiabank / CPPIB -->
+                        <div class="nrole">
+                            <div class="nrole-title">Senior Consultant</div>
+                            <div class="nrole-meta">Feb 2016 – Oct 2016 · Toronto, Canada</div>
+                            <p class="role-overview">A senior consulting role deployed in Toronto as the founding technical presence for Sourced Group's Canadian market expansion. The function delivered cloud platform and configuration management solutions for major financial institutions, while simultaneously establishing the regional team structure, engineering standards, and client relationships that formed the foundation of the Canada practice.</p>
+                            <p class="clabel">Projects</p>
+                            <div class="pcards">
+                                <div class="pc">
+                                    <div class="pc-cl">Bank of Nova Scotia (Scotiabank)</div>
+                                    <div class="pc-d">Led design of core Azure cloud platform with Puppet Enterprise configuration management. Established the Sourced Canada region. Presented the architecture at PuppetConf 2017 in San Francisco.</div>
+                                </div>
+                                <div class="pc">
+                                    <div class="pc-cl">Canada Pension Plan Investment Board (CPPIB)</div>
+                                    <div class="pc-d">Developed Puppet modules enforcing non-negotiable security controls across all OS. Implemented Puppet module testing via Bitbucket Pipelines. Presented at Puppet @ Atlassian Meetup 2017.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">Azure</span><span class="tag">Puppet Enterprise</span>
+                                <span class="tag">Security Automation</span><span class="tag">Canada Launch</span>
+                            </div>
+                        </div>
+
+                        <!-- Senior Consultant: CBA -->
+                        <div class="nrole">
+                            <div class="nrole-title">Senior Consultant</div>
+                            <div class="nrole-meta">Feb 2014 – Feb 2016 · Sydney</div>
+                            <p class="role-overview">The founding Sourced Group engagement — a senior consulting role delivering the "On Demand Platform" for Australia's largest bank. The function combined hands-on engineering leadership at significant scale (4,000+ VMs) with a major training and enablement program, establishing IaC and CI/CD practices across the CBA engineering organisation and laying the foundations for Sourced's growth as a consultancy.</p>
+                            <p class="clabel">Project: Commonwealth Bank of Australia</p>
+                            <div class="achs">
+                                <div class="ach">
+                                    <div class="ach-t">On Demand Platform — IaC at Scale</div>
+                                    <div class="ach-d">Delivered the Puppet Enterprise-powered "On Demand Platform" — a full IaC, Git-driven provisioning capability that gave CBA business teams the ability to rapidly deploy virtual machines for new use cases across all available private (VMware) and public (AWS) cloud environments. At peak, the platform managed over 4,000 virtual machines and served as the organisation's primary self-service infrastructure channel.</div>
+                                </div>
+                                <div class="ach">
+                                    <div class="ach-t">500+ Engineers Trained</div>
+                                    <div class="ach-d">Trained over 500 CBA professionals in IaC, CI/CD, and deployment automation. Presented the CBA solution at PuppetConf 2015 in Portland, Oregon.</div>
+                                </div>
+                            </div>
+                            <div class="tags">
+                                <span class="tag">AWS</span><span class="tag">VMware</span>
+                                <span class="tag">Puppet Enterprise</span><span class="tag">IaC</span>
+                                <span class="tag">CI/CD</span><span class="tag">Training at Scale</span>
+                            </div>
+                        </div>
+
+                    </div><!-- /nested -->
+                </div><!-- /card -->
+            </div><!-- /tl-body -->
+        </div><!-- /tl-item Sourced -->
+
+        <!-- ── TRADITION ── -->
+        <div class="tl-item" data-era="devops">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2011</span>
+                <span class="tl-co">Tradition</span>
+                <span class="tl-role">Team Leader, Linux Engineering</span>
+                <span class="tl-loc">London, UK</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Tradition</div>
+                            <div class="card-when">Finance / Brokerage · Sep 2011 – Aug 2013</div>
+                        </div>
+                        <span class="dur">2 years</span>
+                    </div>
+                    <div class="nrole-title" data-era="devops">Team Leader, Linux Engineering</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">London, UK · 200+ servers · HFT & Brokerage platforms</div>
+                    <p class="role-overview">A technical leadership role managing the Linux infrastructure estate that underpinned Tradition's global electronic trading and brokerage platforms — covering FX, Equities, Energy, RMDS, and Swaps. The function combined hands-on systems engineering with a deliberate mandate to modernize the organization's operational practices, shifting from reactive manual administration to an automated, code-driven infrastructure model.</p>
+                    <p class="clabel">Responsibilities</p>
+                    <ul class="resp">
+                        <li>Led a 2–3 person Linux team managing infrastructure for global FX, Equities, Energy, RMDS, and Swaps platforms</li>
+                        <li>Drove transformation from manual operations to an Infrastructure as Code "Automation First" methodology</li>
+                        <li>Managed complex application integrations (MQ, SOAP/REST, Oracle) for in-house Java brokerage applications</li>
+                    </ul>
+                    <p class="clabel">Key Achievements</p>
+                    <div class="achs">
+                        <div class="ach" data-era="devops">
+                            <div class="ach-t">Infrastructure as Code Transition</div>
+                            <div class="ach-d">Migrated entire Linux estate to Puppet-based management, replacing legacy RHN Satellite. Reduced annual operational costs by £20K.</div>
+                        </div>
+                        <div class="ach" data-era="devops">
+                            <div class="ach-t">Provisioning Optimization</div>
+                            <div class="ach-d">Overhauled provisioning workflows — reduced system build times from hours to minutes across VMware and Bare Metal.</div>
+                        </div>
+                        <div class="ach" data-era="devops">
+                            <div class="ach-t">Standardized Application Delivery</div>
+                            <div class="ach-d">Engineered automated build pipeline using Jenkins and YUM to package in-house Java apps as RPMs, simplifying deployment lifecycle.</div>
+                        </div>
+                        <div class="ach" data-era="devops">
+                            <div class="ach-t">Database & Storage Modernisation</div>
+                            <div class="ach-d">Led Oracle migration (10 on RHEL4 → 11g on RHEL 5/6) and deployed high-availability NetApp FAS2240 storage.</div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag d">Linux</span><span class="tag d">Puppet</span>
+                        <span class="tag d">Jenkins</span><span class="tag d">VMware</span>
+                        <span class="tag d">HFT</span><span class="tag d">Oracle</span>
+                        <span class="tag d">Foreman / ENC</span><span class="tag d">IaC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── MACQUARIE BANK ── -->
+        <div class="tl-item" data-era="unix">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2009</span>
+                <span class="tl-co">Macquarie Bank</span>
+                <span class="tl-role">Senior UNIX Administrator</span>
+                <span class="tl-loc">London, UK</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Macquarie Bank</div>
+                            <div class="card-when">Finance / Banking · Sep 2009 – Sep 2011 · EMEA Region</div>
+                        </div>
+                        <span class="dur">2 yrs 1 mo</span>
+                    </div>
+                    <div class="nrole-title" data-era="unix">Senior UNIX Administrator</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">London · FICC, HR, Corporate Operations</div>
+                    <p class="role-overview">A senior infrastructure role within Macquarie Bank's EMEA operations, responsible for the core Unix and Linux platform supporting Fixed Income, Currencies and Commodities (FICC), HR, and Corporate Operations. The function acted as the regional infrastructure lead — directing shared services including DNS, LDAP, storage, and backup, and representing EMEA requirements in the bank's global UNIX architecture and planning forums.</p>
+                    <p class="clabel">Key Achievements</p>
+                    <div class="achs">
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">Zero-Downtime Data Centre Relocation</div>
+                            <div class="ach-d">Designed and executed the UNIX/Linux workstream for the 2011 EMEA Data Centre relocation — zero business interruption across core critical services including DNS, LDAP, and Storage. Built a suite of migration tools and scripts to optimise time-to-migration and minimise cutover windows across the platform.</div>
+                        </div>
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">Identity Management Modernization</div>
+                            <div class="ach-d">Led regional migration of all EMEA UNIX servers from legacy NIS to centralized LDAP architecture, improving security and authentication performance.</div>
+                        </div>
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">Backup: 5 Days → 5 Hours</div>
+                            <div class="ach-d">Refreshed legacy Legato/Netbackup environment — reduced NetApp backup windows from 5 days to 5 hours through hardware and policy re-engineering.</div>
+                        </div>
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">Solaris LDOM Consolidation</div>
+                            <div class="ach-d">Modernized Solaris footprint by consolidating legacy hardware onto Sun T5240 servers using Logical Domains (LDOMs), reducing rack space and power consumption.</div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag u">Solaris</span><span class="tag u">Linux</span>
+                        <span class="tag u">DNS / BIND</span><span class="tag u">LDAP</span>
+                        <span class="tag u">NetApp</span><span class="tag u">SAN / NAS</span>
+                        <span class="tag u">Puppet</span><span class="tag u">LDOMs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── BARCLAYS GLOBAL INVESTORS ── -->
+        <div class="tl-item" data-era="unix">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2005</span>
+                <span class="tl-co">Barclays Global Investors (BGI)</span>
+                <span class="tl-role">Senior Unix Administrator</span>
+                <span class="tl-loc">London, UK</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Barclays Global Investors (BGI)</div>
+                            <div class="card-when">Finance / Asset Management · Jun 2005 – Sep 2009 · ~1,000 servers globally</div>
+                        </div>
+                        <span class="dur">4 yrs 4 mo</span>
+                    </div>
+                    <div class="nrole-title" data-era="unix">Senior Unix Administrator</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">London · Global "Follow the Sun" rotation (EMEA, APAC, USA)</div>
+                    <p class="role-overview">A senior member of the global UNIX support team managing a distributed estate of approximately 1,000 Solaris and Linux servers across EMEA, APAC, and the USA. The function operated within a "Follow the Sun" on-call model to ensure 24/7 availability for production investment banking systems, with a specialist focus on Veritas storage foundation and clustering technologies and the global identity and access management estate.</p>
+                    <p class="clabel">Key Achievements</p>
+                    <div class="achs">
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">iShares Platform Modernisation</div>
+                            <div class="ach-d">Led end-to-end infrastructure uplift of the iShares platform from Solaris 8 to Solaris 10, including Java and Perl framework upgrades and custom codebase refactoring.</div>
+                        </div>
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">MQSeries High Availability</div>
+                            <div class="ach-d">Designed, built, and maintained HA architecture for the group's MQSeries messaging platform using large-scale Solaris VCS clusters.</div>
+                        </div>
+                        <div class="ach" data-era="unix">
+                            <div class="ach-t">Solaris 10 Enterprise Rollout</div>
+                            <div class="ach-d">Drove global migration to Solaris 10 delivering Zones/Containers, enhanced security, and improved resource management across the production server estate.</div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag u">Solaris 10</span><span class="tag u">Veritas VCS / VxVM</span>
+                        <span class="tag u">MQSeries</span><span class="tag u">iShares</span>
+                        <span class="tag u">LDAP / AD / Kerberos</span><span class="tag u">Zones</span>
+                        <span class="tag u">Oracle RAC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── ERICSSON ── -->
+        <div class="tl-item" data-era="legacy">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2003</span>
+                <span class="tl-co">Ericsson Australia</span>
+                <span class="tl-role">Senior Unix Administrator · Team Leader</span>
+                <span class="tl-loc">Sydney, AU</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Ericsson Australia</div>
+                            <div class="card-when">Telecommunications · Jan 2003 – Feb 2006 · Hutchison Telecoms Project</div>
+                        </div>
+                        <span class="dur">3 years</span>
+                    </div>
+                    <div class="nrole-title" data-era="legacy">Senior Unix Administrator (Team Leader)</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">Sydney · Hutchison Telecom & 3 Mobile (national 3G network)</div>
+                    <p class="role-overview">A senior Unix administration role embedded within the Ericsson-managed infrastructure program for Hutchison Telecoms, responsible for designing and building greenfield technology stacks that powered two distinct brands: Hutchison Telecom and Australia's first national 3G network, 3 Mobile. The function rapidly escalated to team leadership — overseeing a 12+ person engineering team delivering production systems across billing, content management, BSS, and OSS during a period of significant data centre expansion.</p>
+                    <p class="clabel">Key Achievements</p>
+                    <div class="achs">
+                        <div class="ach" data-era="legacy">
+                            <div class="ach-t">Australia's First National 3G Network</div>
+                            <div class="ach-d">Delivered the technology implementation and rollout for Australia's first national 3G mobile network (3 Mobile) — greenfield infrastructure across BSS, OSS, and Content Management platforms.</div>
+                        </div>
+                        <div class="ach" data-era="legacy">
+                            <div class="ach-t">Strategic Team Leadership</div>
+                            <div class="ach-d">Managed 12+ person technical team (including TCS partners) during rapid data centre expansion. Promoted to UNIX Team Lead within first year.</div>
+                        </div>
+                        <div class="ach" data-era="legacy">
+                            <div class="ach-t">PeopleSoft BSS Transition</div>
+                            <div class="ach-d">Led UNIX infrastructure workstream for the company-wide transition to the PeopleSoft BSS platform.</div>
+                        </div>
+                    </div>
+                    <div class="tags">
+                        <span class="tag l">Solaris</span><span class="tag l">HP-UX</span>
+                        <span class="tag l">Veritas VCS</span><span class="tag l">VxVM</span>
+                        <span class="tag l">BSS / OSS</span><span class="tag l">PeopleSoft</span>
+                        <span class="tag l">Oracle HA</span><span class="tag l">HP9000 / UltraSPARC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── HP AUSTRALIA ── -->
+        <div class="tl-item" data-era="legacy">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2000</span>
+                <span class="tl-co">Hewlett-Packard Australia</span>
+                <span class="tl-role">Customer Engineer</span>
+                <span class="tl-loc">Sydney, AU</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Hewlett-Packard Australia</div>
+                            <div class="card-when">IT Services / Hardware · Nov 2000 – Aug 2003</div>
+                        </div>
+                        <span class="dur">2 yrs 10 mo</span>
+                    </div>
+                    <div class="nrole-title" data-era="legacy">Customer Engineer</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">Sydney · Banking, Aviation, Medical, Insurance, Higher Education</div>
+                    <p class="role-overview">A field-based enterprise engineering role responsible for the on-site maintenance, repair, and lifecycle management of HP's enterprise Unix server fleet across NSW and ACT. The function served clients across Banking, Aviation, Healthcare, Insurance, and Higher Education — acting as the primary technical contact for hardware incidents, upgrades, and architectural transitions for organizations running mission-critical HP-UX environments.</p>
+                    <p class="clabel">Responsibilities</p>
+                    <ul class="resp">
+                        <li>Managed end-to-end lifecycle for the entire HP-9000 server family (A, K, T, N, L, D, V, Superdome) across NSW and ACT</li>
+                        <li>Completed advanced hardware engineering training at HP Labs Cupertino, CA — qualified for full teardown and reassembly of midrange fleet</li>
+                        <li>Led the regional shift from PA-RISC to Intel Itanium — one of the first Itanium rollouts at University of NSW</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag l">HP-UX</span><span class="tag l">HP9000 / Superdome</span>
+                        <span class="tag l">Itanium / PA-RISC</span><span class="tag l">Fibre Channel</span>
+                        <span class="tag l">Storage Arrays</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── ALLTEL ── -->
+        <div class="tl-item" data-era="legacy">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">2001</span>
+                <span class="tl-co">Alltel Information Services</span>
+                <span class="tl-role">Junior Midrange UNIX Engineer</span>
+                <span class="tl-loc">Sydney, AU</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Alltel Information Services</div>
+                            <div class="card-when">Banking / Fintech · Jan 2001 – Jan 2003</div>
+                        </div>
+                        <span class="dur">2 years</span>
+                    </div>
+                    <div class="nrole-title" data-era="legacy">Junior Midrange UNIX Engineer</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">Sydney · Data Warehousing & Leasing Business Systems</div>
+                    <p class="role-overview">An early engineering role providing day-to-day administration and support of the bank's core data warehousing and leasing business systems. The function delivered hands-on technical ownership across HP-UX and Sun Solaris environments — from OS administration through to Oracle database support — within a high-availability midrange production context supporting the bank's data-driven operations.</p>
+                    <p class="clabel">Responsibilities</p>
+                    <ul class="resp">
+                        <li>Maintained HP9000 T/K/D-Class and Sun UltraSPARC systems with Oracle database support</li>
+                        <li>Contributed to migration of core systems to new data centres following CBA acquisition of business units</li>
+                        <li>Delivered hardware uplift projects to ensure performance matched business growth requirements</li>
+                        <li>Developed scripts and tooling to support users of the systems, automating routine operations and reducing manual effort across the team</li>
+                        <li>Provided technical support to users of the business systems, troubleshooting issues and resolving incidents across the data warehousing and leasing platforms</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag l">HP-UX</span><span class="tag l">Solaris</span>
+                        <span class="tag l">Oracle DB</span><span class="tag l">HP9000</span>
+                        <span class="tag l">Data Warehousing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── ADVANTRA ── -->
+        <div class="tl-item" data-era="legacy">
+            <div class="dot"></div>
+            <div class="tl-hd" onclick="tog(this)">
+                <span class="tl-year">1998</span>
+                <span class="tl-co">Advantra Australia</span>
+                <span class="tl-role">Senior Systems Administrator</span>
+                <span class="tl-loc">Sydney, AU</span>
+                <span class="tl-arr">▼</span>
+            </div>
+            <div class="tl-body">
+                <div class="card">
+                    <div class="card-hd">
+                        <div>
+                            <div class="card-co">Advantra Australia</div>
+                            <div class="card-when">Managed Services / Banking · Nov 1998 – Nov 1999</div>
+                        </div>
+                        <span class="dur">1 yr 1 mo</span>
+                    </div>
+                    <div class="nrole-title" data-era="legacy">Senior Systems Administrator</div>
+                    <div style="font-size:0.75rem;color:var(--txt3);font-family:'JetBrains Mono',monospace;margin-bottom:0.5rem;">Sydney · Colonial First State (Colonial Bank) Account</div>
+                    <p class="role-overview">An early-career managed services role delivering technical support for the Colonial First State infrastructure account under the Advantra banner. The function covered Windows Server administration, desktop lifecycle management, and operational support for production banking applications — serving both front-office branch staff and back-office corporate users across multiple sites.</p>
+                    <p class="clabel">Responsibilities</p>
+                    <ul class="resp">
+                        <li>Delivered technical support for Colonial First State infrastructure — Windows Server environments for core banking application delivery</li>
+                        <li>Led large-scale desktop refreshes across multiple banking sites with minimal disruption</li>
+                        <li>Maintained high SLA standards for production banking applications supporting branch staff and back-office users</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag l">Windows Server</span><span class="tag l">Active Directory</span>
+                        <span class="tag l">Desktop Engineering</span><span class="tag l">Banking Systems</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /tl -->
+</section>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════ SKILLS ═══════════════ -->
+<div class="container">
+<section id="skills">
+    <p class="label">// technical expertise</p>
+    <h2 class="section-title">Skills & Technology</h2>
+    <div class="skills-grid">
+        <div class="sk-cat">
+            <div class="sk-cat-title">AI Tools & Platforms</div>
+            <div class="chips">
+                <span class="chip">Claude (Anthropic)</span>
+                <span class="chip">Amazon Kiro</span>
+                <span class="chip">Microsoft Copilot</span>
+                <span class="chip">Gemini</span>
+                <span class="chip">Amazon Bedrock</span>
+                <span class="chip">Coder.com</span>
+                <span class="chip">OpenSpec</span>
+                <span class="chip">OpenCode</span>
+                <span class="chip">Atlassian Rovo</span>
+                <span class="chip">Agentic Platform Engineering</span>
+                <span class="chip">AI-Native Infrastructure Design</span>
+                <span class="chip">Secure AI Deployment</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title">Cloud Platforms</div>
+            <div class="chips">
+                <span class="chip" style="border-color:var(--accent);color:var(--accent);font-weight:600;">AWS</span>
+                <span class="chip">Platform as a Product</span>
+                <span class="chip">Team Topologies</span>
+                <span class="chip">Multi-Cloud Strategy</span>
+            </div>
+            <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--txt3);margin:0.55rem 0 0.3rem;">Supplemental</div>
+            <div class="chips">
+                <span class="chip" style="opacity:0.65;">Microsoft Azure</span>
+                <span class="chip" style="opacity:0.65;">Google Cloud / GCVE</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title">Infrastructure as Code & Automation</div>
+            <div class="chips">
+                <span class="chip">Terraform</span>
+                <span class="chip">Puppet Enterprise</span>
+                <span class="chip">Ansible</span>
+                <span class="chip">CloudFormation</span>
+                <span class="chip">Boto3</span>
+                <span class="chip">Kickstart / Jumpstart</span>
+                <span class="chip">Foreman / ENC</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title">Containers & Orchestration</div>
+            <div class="chips">
+                <span class="chip">Kubernetes</span>
+                <span class="chip">Amazon EKS</span>
+                <span class="chip">Docker</span>
+                <span class="chip">Cloud-Native Architecture</span>
+                <span class="chip">Coder.com / Agentic Workloads</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title d">DevOps & CI/CD</div>
+            <div class="chips">
+                <span class="chip">GitHub / GitHub Actions</span>
+                <span class="chip">Bitbucket Pipelines</span>
+                <span class="chip">Jenkins</span>
+                <span class="chip">Atlassian Suite</span>
+                <span class="chip">Bamboo</span>
+                <span class="chip">YUM / RPM Packaging</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title u">Operating Systems & Infrastructure</div>
+            <div class="chips">
+                <span class="chip">Linux (RHEL / Ubuntu)</span>
+                <span class="chip">Solaris 8 / 9 / 10</span>
+                <span class="chip">HP-UX</span>
+                <span class="chip">VMware ESX</span>
+                <span class="chip">Veritas VCS / VxVM</span>
+                <span class="chip">LDOMs / Zones</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title">Security & Identity</div>
+            <div class="chips">
+                <span class="chip">IAM</span>
+                <span class="chip">KMS</span>
+                <span class="chip">Secrets Management</span>
+                <span class="chip">LDAP / NIS</span>
+                <span class="chip">Active Directory</span>
+                <span class="chip">Kerberos</span>
+                <span class="chip">EntraID</span>
+                <span class="chip">Okta</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title u">Storage & Networking</div>
+            <div class="chips">
+                <span class="chip">NetApp NAS / FAS</span>
+                <span class="chip">SAN / Fibre Channel</span>
+                <span class="chip">DNS / BIND</span>
+                <span class="chip">AWS Direct Connect</span>
+                <span class="chip">MQSeries</span>
+                <span class="chip">Akamai CDN</span>
+            </div>
+        </div>
+        <div class="sk-cat">
+            <div class="sk-cat-title">Leadership & Pre-Sales</div>
+            <div class="chips">
+                <span class="chip">Squad of Squads</span>
+                <span class="chip">Pre-Sales Architecture</span>
+                <span class="chip">RFP / SOW Authoring</span>
+                <span class="chip">Post-Merger Integration</span>
+                <span class="chip">Technical Mentoring</span>
+                <span class="chip">Global Team Expansion</span>
+                <span class="chip">Hyperscaler Partnerships</span>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════ CERTIFICATIONS ═══════════════ -->
+<div class="container">
+<section id="certs">
+    <p class="label">// credentials</p>
+    <h2 class="section-title">Certifications</h2>
+    <div class="certs-grid">
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">Solutions Architect — Professional</div>
+            <div class="cert-meta">Issued Sep 2024 · Expires Sep 2027<br>ID: 72WFPRY1LBVQ155H</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">SysOps Administrator — Associate</div>
+            <div class="cert-meta">Issued Jun 2019</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">Systems Architect — Professional</div>
+            <div class="cert-meta">Issued Apr 2019</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">Solutions Architect — Associate</div>
+            <div class="cert-meta">Issued Aug 2018</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Puppet</div>
+            <div class="cert-name">Puppet Certified Professional</div>
+            <div class="cert-meta">Issued Mar 2014 · ID: PCP0000105</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Red Hat</div>
+            <div class="cert-name">Certified Systems Engineer — RHEL5</div>
+            <div class="cert-meta">Issued Dec 2009 · ID: 805009200844826</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">VMware</div>
+            <div class="cert-name">VMware Certified Professional (ESX 3.5)</div>
+            <div class="cert-meta">Issued Jan 2009 · ID: 36063</div>
+        </div>
+        <div class="cert ok">
+            <span class="cert-status ok">● Active</span>
+            <div class="cert-iss">Hewlett Packard Enterprise</div>
+            <div class="cert-name">HP-UX Certified Unix Administrator (HP-UX 11i)</div>
+            <div class="cert-meta">Issued Jan 2005 · ID: SP9880881<br>Training: HP Labs Cupertino, CA (Dec 2000 – Feb 2001)</div>
+        </div>
+        <div class="cert exp">
+            <span class="cert-status exp">Expired</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">Solutions Architect — Associate Level</div>
+            <div class="cert-meta">Issued Sep 2014 · Expired Sep 2020<br>ID: AWS-ASA-3674</div>
+        </div>
+        <div class="cert exp">
+            <span class="cert-status exp">Expired</span>
+            <div class="cert-iss">Amazon Web Services</div>
+            <div class="cert-name">SysOps Administrator</div>
+            <div class="cert-meta">Issued Dec 2014 · Expired Dec 2016<br>ID: AWS-ASOA-552</div>
+        </div>
+        <div class="cert exp">
+            <span class="cert-status exp">Expired</span>
+            <div class="cert-iss">Puppet</div>
+            <div class="cert-name">System Administration using Puppet</div>
+            <div class="cert-meta">Issued Apr 2015 · ID: PPT0001221</div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <div style="margin-top:2.5rem;">
+        <p class="label">// education</p>
+        <div class="cert ok" style="margin-top:0.85rem; max-width:420px;">
+            <div class="cert-iss">St Patricks Marist College, Dundas</div>
+            <div class="cert-name">Higher School Certificate</div>
+            <div class="cert-meta">January 1993 – December 1998</div>
+        </div>
+    </div>
+</section>
+</div>
+
+<hr class="divider">
+
+<!-- ═══════════════ INTERESTS & SIDE PROJECTS ═══════════════ -->
+<div class="container">
+<section id="interests">
+    <p class="label">// beyond work</p>
+    <h2 class="section-title">Interests & Side Projects</h2>
+    <div class="skills-grid">
+
+        <div class="sk-cat">
+            <div class="sk-cat-title">Technical Blog</div>
+            <p class="role-overview" style="margin-top:0.3rem;">I maintain a technical blog at <a href="https://notes.keiran.io/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">notes.keiran.io</a> — a space for me to share and link to authored and contributed content spanning podcast episodes, blog posts, and conference talks across a variety of topics. More recently it has become a home for platform engineering and AI learnings, best practices, and write-ups from conference presentations.</p>
+        </div>
+
+        <div class="sk-cat">
+            <div class="sk-cat-title">Home Assistant — Early Adopter & Contributor</div>
+            <p class="role-overview" style="margin-top:0.3rem;">An early adopter of the Home Assistant open-source home automation platform. I build and operate solutions at home that solve real problems across automation, monitoring, and integration. Beyond personal use, I have contributed code to the project — including the initial Route 53 integration — and have been a guest on the Home Assistant Podcast, sharing knowledge with the broader community.</p>
+        </div>
+
+        <div class="sk-cat">
+            <div class="sk-cat-title">Southwest Tech Meetup — Founder</div>
+            <p class="role-overview" style="margin-top:0.3rem;">Founder of the <a href="https://swtech-au.github.io/southwest-tech/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">Southwest Tech Meetup</a>, a community for technologists in Western Australia's southwest region. The meetup brings together engineers, developers, and tech enthusiasts to connect, share ideas, and learn from one another in a part of the world that doesn't always have access to the tech community events of a major city.</p>
+        </div>
+
+    </div>
+</section>
+</div>
+
+<footer>
+    <p>Keiran Sweet — Cloud &amp; AI Platform Engineer · Southwest, Western Australia</p>
+    <p style="margin-top:0.4rem;">keiran [at] gmail.com</p>
+</footer>
+
+<script>
+    function tog(hd) {
+        hd.closest('.tl-item').classList.toggle('open');
+    }
+
+    // Era filter
+    document.querySelectorAll('.flt').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.flt').forEach(b => b.classList.remove('on'));
+            btn.classList.add('on');
+            const f = btn.dataset.f;
+            document.querySelectorAll('.tl-item').forEach(item => {
+                const show = f === 'all' || item.dataset.era.split(' ').includes(f);
+                item.classList.toggle('hide', !show);
+                if (!show) item.classList.remove('open');
+            });
+        });
+    });
+
+    // Active nav on scroll
+    const secs = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                links.forEach(a => {
+                    a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+                });
+            }
+        });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    secs.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
