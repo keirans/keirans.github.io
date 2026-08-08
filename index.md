@@ -5,6 +5,7 @@ title: ""
 
 | Date        | Content            |
 |:-------------|:------------------|
+| 08/08/2026   | [Building an AI Assistant with Hermes, Home Assistant & WhatsApp](/posts/Hermes_Home_Assistant_WhatsApp/) |
 | 11/06/2026   | [Kicking the Tyres on AWS FinOps Agent (Preview)](/posts/AWS_FinOps_Agent/) |
 | 30/04/2026   | [OpenSpec: Spend your Tokens on Code - Not on Context](/posts/OpenSpec/) |
 | 30/03/2026   | [The Cheapest AI Upgrade Is Already in Your Backlog](/posts/AI_Engineering_Standards/) |
